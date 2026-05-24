@@ -595,7 +595,7 @@ async function ld(){
       if(doc.exists) merged[CATS[i]] = doc.data().items || [];
     });
   } catch(e){ console.warn('Firebase load error:', e); }
-  if(!merged.members) merged.members = JSON.parse(JSON.stringify(MEMBERS));
+  if(!merged.members || !merged.members.length) merged.members = JSON.parse(JSON.stringify(MEMBERS));
   merged.nid = merged.members?._nid || Date.now();
   if(!merged.repertoire || !merged.repertoire.length) merged.repertoire = getDefaultRepertoire();
   if(!merged.events || !merged.events.length) merged.events = [{id:1,title:'排练',date:new Date().toISOString().slice(0,10),time:'19:00',type:'排练'}];
@@ -607,6 +607,8 @@ async function ld(){
   data = merged;
   _gidCounter = data.nid || Date.now();
   dataLoaded = true;
+  // Save defaults to Firestore so data persists across devices
+  await sv();
 }
 
 async function sv(){
