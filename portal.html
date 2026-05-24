@@ -202,10 +202,12 @@ select{appearance:auto}
 .audio-card.playing{border-color:var(--gold);background:var(--gold-glow)}
 /* Audio seek bar */
 .audio-card{position:relative}
-.audio-seek{position:absolute;bottom:6px;left:8px;right:8px;height:4px;background:rgba(0,0,0,0.1);border-radius:2px;cursor:pointer;display:none;z-index:5;overflow:hidden}
+.audio-seek{position:absolute;bottom:2px;left:4px;right:4px;height:18px;background:transparent;cursor:pointer;display:none;z-index:5;touch-action:none}
 .audio-card.playing .audio-seek{display:block}
-.audio-seek:hover{height:6px}
-.audio-seek-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.1s linear}
+.audio-seek-track{position:absolute;top:7px;left:0;right:0;height:4px;background:rgba(0,0,0,0.12);border-radius:2px;pointer-events:none}
+.audio-seek-fill{height:100%;background:var(--gold);border-radius:2px;width:0%}
+.audio-seek:hover .audio-seek-track{height:6px;top:6px}
+
 .audio-text{z-index:2;position:relative}
 .audio-card .ac-icon{z-index:2;position:relative}
 .audio-card .ac-label{z-index:2;position:relative}
@@ -734,11 +736,11 @@ async function showRepDetail(id){
     resolveURL(r.audS),resolveURL(r.audA),resolveURL(r.audT),resolveURL(r.audB),
     resolveURL(r.vid),resolveURL(r.sheet)
   ]);
-  const vi=!!vid,si=!!sheet;
+  const si=!!sheet;
   const cols={soprano:'#72243E',alto:'#3C3489',tenor:'#0C447C',bass:'#27500A'};
   function ac(p,l,u){
     const h=!!u;
-    return '<div class="audio-card '+(h?'has-audio':'')+'" '+(h?'onclick="playAudio(this)"':'')+' style="'+(h?'border-top:3px solid '+(cols[p]||'#c9a84c'):'')+'"><div class="ac-text"><div class="ac-icon">'+(h?'\ud83c\udfb5':'\ud83d\udd07')+'</div><div class="ac-label">'+l+'</div><div class="ac-sub">'+(h?'\u70b9\u51fb\u64ad\u653e':'\u6682\u65e0\u97f3\u9891')+'</div></div><div class="ac-play">\u25b6</div><audio preload="none" src="'+(u||'')+'"></audio><div class="audio-seek" onclick="seekAudio(event,this)"><div class="audio-seek-fill"></div></div></div>';
+    return '<div class="audio-card '+(h?'has-audio':'')+'" '+(h?'onclick="playAudio(this)"':'')+' style="'+(h?'border-top:3px solid '+(cols[p]||'#c9a84c'):'')+'"><div class="ac-text"><div class="ac-icon">'+(h?'\ud83c\udfb5':'\ud83d\udd07')+'</div><div class="ac-label">'+l+'</div><div class="ac-sub">'+(h?'\u70b9\u51fb\u64ad\u653e':'\u6682\u65e0\u97f3\u9891')+'</div></div><div class="ac-play">\u25b6</div><audio preload="none" src="'+(u||'')+'"></audio><div class="audio-seek" onmousedown="startSeek(event,this)" ontouchstart="touchSeek(event,this)"><div class="audio-seek-track"><div class="audio-seek-fill"></div></div></div></div>';
   }
   const el=document.getElementById('repDetail');
   el.innerHTML='<button class="close" onclick="closeRepModal()">\u2715</button><h3>'+r.name+'</h3><div class="sub">'+(r.composer||'\u2014')+' \u00b7 '+(r.lang||'\u2014')+' \u00b7 '+(r.style||'\u2014')+'</div><div class="section"><h4>\ud83c\udfb5 \u58f0\u90e8\u97f3\u9891</h4><div class="audio-grid">'+
@@ -747,14 +749,16 @@ async function showRepDetail(id){
   // Video
   if(vid){
     el.innerHTML+='<div class="section"><h4>\ud83c\udfa5 \u53c2\u8003\u89c6\u9891</h4>';
-    if(vi){
-      el.innerHTML+='<div class="video-card" onclick="this.innerHTML=\'<video controls autoplay style=\\"width:100%;height:100%;object-fit:contain;background:#000\\"><source src=\\"'+vid.replace(/\\/g,'\\\\')+'\\" type=\\"video/mp4\\"></video>\'"><div class="vc-play"><span>\u25b6</span></div></div>';
+    const ytm=vid.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/);
+    const yt=ytm?ytm[1]:'';
+    const isDirectVideo=!!vid.match(/\.(mp4|mov|webm|ogg)(\?.*)?$/i);
+    if(yt){
+      el.innerHTML+='<div class="video-card" onclick="this.innerHTML=\'<iframe src=\"https://www.youtube.com/embed/'+yt+'?autoplay=1\" allow=\"accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture\" allowfullscreen style=\"width:100%;height:100%;border:none\"></iframe>\'"><div class="vc-play"><span>\u25b6</span></div><div class="vc-label">YouTube</div><img src="https://img.youtube.com/vi/'+yt+'/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover" alt=\"\u89c6\u9891\u5c01\u9762\" onerror="this.style.display=\'none\'"></div>';
+    } else if(isDirectVideo){
+      el.innerHTML+='<div class="video-card" onclick="this.innerHTML=\'<video controls autoplay style=\"width:100%;height:100%;object-fit:contain;background:#000\"><source src=\"'+vid.replace(/\\/g,'\\\\')+'\"></video>\'"><div class="vc-play"><span>\u25b6</span></div></div>';
     } else {
-      const ytm=vid.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/);
-      const yt=ytm?ytm[1]:'';
-      if(yt){
-        el.innerHTML+='<div class="video-card" onclick="this.innerHTML=\'<iframe src=\\"https://www.youtube.com/embed/'+yt+'?autoplay=1\\" allow=\\"accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture\\" allowfullscreen style=\\"width:100%;height:100%;border:none\\"></iframe>\'"><div class="vc-play"><span>\u25b6</span></div><div class="vc-label">YouTube</div><img src="https://img.youtube.com/vi/'+yt+'/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover" alt="\u89c6\u9891\u5c01\u9762" onerror="this.style.display=\'none\'"></div>';
-      } else {
+      el.innerHTML+='<div class="video-card" onclick="window.open(\''+vid.replace(/'/g,"\\'")+'\',\'_blank\')"><div class="vc-play"><span>\u25b6</span></div><div class="vc-label">\u70b9\u51fb\u64ad\u653e</div></div>';
+    }else {
         el.innerHTML+='<div class="video-card" onclick="window.open(\''+vid.replace(/'/g,"\\'")+'\',\'_blank\')"><div class="vc-play"><span>\u25b6</span></div><div class="vc-label">\u70b9\u51fb\u64ad\u653e</div></div>';
       }
     }
@@ -776,7 +780,7 @@ async function showRepDetail(id){
           sa.onclick=function(){window.open(s,'_blank')};
         } else {
           sa.innerHTML='<img src="'+s+'" alt="\u7b80\u8c31" style="width:100%;height:auto;display:block" onerror="this.outerHTML=\'<div class=\\\"sc-placeholder\\\"><span class=\\\"sc-icon\\\">\ud83d\udcc4</span>\u70b9\u51fb\u67e5\u770b</div>\'">';
-          sa.onclick=function(){openImgViewer(s)};
+          sa.onclick=function(){openImg(s)};
         }
       } else {
         sa.innerHTML='<div class="sc-placeholder"><span class="sc-icon">\ud83d\udcc4</span>\u6682\u65e0\u7b80\u8c31</div>';
@@ -811,17 +815,33 @@ function playAudio(el){
   }
 }
 
-function seekAudio(e,el){
-  e.stopPropagation();
+let draggingSeek = null;
+function startSeek(e,el){
+  e.preventDefault();
+  draggingSeek = el;
+  doSeek(e, el);
+  document.addEventListener('mousemove', onSeekMove);
+  document.addEventListener('mouseup', onSeekUp);
+}
+function onSeekMove(e){ if(draggingSeek) doSeek(e, draggingSeek); }
+function onSeekUp(){ draggingSeek = null; document.removeEventListener('mousemove', onSeekMove); document.removeEventListener('mouseup', onSeekUp); }
+function touchSeek(e,el){
+  e.preventDefault();
+  const touch = e.touches[0];
+  if(touch) doSeek({clientX: touch.clientX}, el);
+}
+function doSeek(e,el){
+  if(!el) return;
+  const track = el.querySelector('.audio-seek-track') || el;
   const card=el.closest('.audio-card');
   if(!card)return;
   const a=card.querySelector('audio');
   if(!a||!a.duration)return;
   const rect=el.getBoundingClientRect();
-  const pct=(e.clientX-rect.left)/rect.width;
+  const pct=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
   a.currentTime=pct*a.duration;
   const fill=el.querySelector('.audio-seek-fill');
-  if(fill)fill.style.width=Math.min(100,Math.max(0,pct*100))+'%';
+  if(fill)fill.style.width=(pct*100)+'%';
 }
 
 function openImg(url){
