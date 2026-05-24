@@ -591,8 +591,13 @@ function getDefaultRepertoire(){
 async function ld(){
   const CATS = ['members','repertoire','events','announcements','discussion','media','attendance','homework'];
   const merged = {};
+  // Timeout safeguard for slow mobile connections
+  const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error('load timeout')), 8000));
   try {
-    const snapshots = await Promise.all(CATS.map(c => catDoc(c).get()));
+    const snapshots = await Promise.race([
+      Promise.all(CATS.map(c => catDoc(c).get())),
+      timeout
+    ]);
     snapshots.forEach((doc, i) => {
       if(doc.exists) merged[CATS[i]] = doc.data().items || [];
     });
