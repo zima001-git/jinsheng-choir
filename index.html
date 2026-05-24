@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>金声合唱团 Golden Voice Choir | Perth Chinese Community Choir</title>
+<meta name="description" content="金声合唱团是一支位于澳大利亚珀斯的华人社区合唱团，通过合唱连接音乐、文化与社区。欢迎热爱歌唱者加入，也欢迎演出与合作邀请。">
+<meta name="keywords" content="Perth choir, Chinese choir Perth, community choir Perth, Golden Voice Choir, 金声合唱团, 珀斯合唱团, 珀斯华人合唱团">
+<meta name="theme-color" content="#0f1a2e">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Using system fonts for speed, with Noto Sans SC as optional -->
+<style>
+/* ===== RESET ===== */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+/* ===== VARIABLES ===== */
+:root {
+  --navy: #0f1a2e;
+  --navy-mid: #1a2d4a;
+  --navy-light: #2a4060;
+  --gold: #c9a84c;
+  --gold-light: #e8d5a0;
+  --gold-glow: rgba(201,168,76,0.15);
+  --ivory: #faf7f2;
+  --ivory-dark: #f0ebe3;
+  --white: #ffffff;
+  --gray-100: #f5f3ef;
+  --gray-200: #e8e4dd;
+  --gray-400: #b0a99c;
+  --gray-500: #8a8070;
+  --gray-600: #655e50;
+  --text: #1a1410;
+  --text-light: #655e50;
+  --shadow: 0 4px 24px rgba(15,26,46,0.08);
+  --shadow-lg: 0 8px 40px rgba(15,26,46,0.12);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --max-w: 1200px;
+  --header-h: 72px;
+  --font-cn: 'PingFang SC','Hiragino Sans GB','Microsoft YaHei','Noto Sans SC',sans-serif;
+  --font-en: 'Inter','SF Pro Text',-apple-system,BlinkMacSystemFont,sans-serif;
+  --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+}
+
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header-h) + 24px)}
+body{
+  font-family:var(--font-cn);
+  color:var(--text);
+  background:var(--ivory);
+  line-height:1.7;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1,h2,h3,h4{line-height:1.3;font-weight:600;color:var(--navy)}
+h1{font-size:clamp(2rem,5vw,3.2rem);letter-spacing:-0.02em}
+h2{font-size:clamp(1.5rem,3.5vw,2.2rem);margin-bottom:1rem}
+h3{font-size:clamp(1.1rem,2vw,1.4rem)}
+p{color:var(--text-light);margin-bottom:1rem}
+a{color:var(--gold);text-decoration:none;transition:color var(--transition)}
+a:hover{color:var(--navy)}
+img{max-width:100%;height:auto;display:block}
+.en{font-family:var(--font-en);letter-spacing:0.02em}
+.section-label{
+  display:inline-block;
+  font-family:var(--font-en);
+  font-size:0.75rem;
+  font-weight:600;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--gold);
+  margin-bottom:0.75rem;
+}
+
+.container{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+section{padding:clamp(3rem,8vw,6rem) 0}
+
+/* ===== BUTTONS ===== */
+.btn{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:14px 28px;border-radius:var(--radius-sm);
+  font-size:0.95rem;font-weight:500;font-family:inherit;
+  border:none;cursor:pointer;
+  transition:all var(--transition);
+  text-decoration:none;
+}
+.btn-primary{
+  background:var(--gold);color:var(--navy);
+  box-shadow:0 2px 12px var(--gold-glow);
+}
+.btn-primary:hover{background:var(--gold-light);transform:translateY(-1px);box-shadow:0 4px 20px var(--gold-glow);color:var(--navy)}
+.btn-outline{
+  background:transparent;color:var(--gold);
+  border:1.5px solid var(--gold);
+}
+.btn-outline:hover{background:var(--gold);color:var(--navy);transform:translateY(-1px)}
+.btn-navy{
+  background:var(--navy);color:var(--ivory);
+}
+.btn-navy:hover{background:var(--navy-mid);transform:translateY(-1px)}
+.btn-white{
+  background:var(--white);color:var(--navy);
+}
+.btn-white:hover{background:var(--gray-100);transform:translateY(-1px)}
+
+.btn-group{display:flex;flex-wrap:wrap;gap:12px;margin-top:1.5rem}
+
+/* ===== HEADER ===== */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--header-h);
+  background:rgba(15,26,46,0.92);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  display:flex;align-items:center;
+  transition:background var(--transition);
+}
+.header-inner{
+  display:flex;align-items:center;justify-content:space-between;
+  max-width:var(--max-w);margin:0 auto;padding:0 24px;
+  width:100%;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  color:var(--ivory);text-decoration:none;
+}
+.logo-icon{
+  width:36px;height:36px;
+  background:linear-gradient(135deg,var(--gold),var(--gold-light));
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;color:var(--navy);font-weight:700;
+}
+.logo-text{
+  font-size:1.15rem;font-weight:700;color:var(--ivory);letter-spacing:1px;
+}
+.logo-en{
+  font-family:var(--font-en);font-size:0.65rem;
+  color:var(--gray-400);letter-spacing:0.1em;margin-top:-1px;
+}
+
+/* NAV */
+.nav{display:flex;align-items:center;gap:4px}
+.nav a{
+  padding:8px 16px;border-radius:var(--radius-sm);
+  font-size:0.88rem;color:var(--gray-200);
+  transition:all var(--transition);text-decoration:none;
+  white-space:nowrap;
+}
+.nav a:hover{background:rgba(255,255,255,0.06);color:var(--gold)}
+
+/* Dropdown */
+.nav-item-wrap{position:relative;display:inline-block}
+.nav-item-wrap > a{padding-right:24px!important}
+.nav-item-wrap > a::after{
+  content:'▼';position:absolute;right:8px;top:50%;
+  transform:translateY(-50%);font-size:7px;color:var(--gray-400);
+  transition:transform var(--transition);
+}
+.nav-item-wrap:hover > a::after{transform:translateY(-50%) rotate(180deg)}
+.nav-dropdown{
+  position:absolute;top:100%;left:0;min-width:180px;
+  background:rgba(15,26,46,0.96);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:var(--radius-sm);padding:6px;
+  opacity:0;visibility:hidden;transform:translateY(-4px);
+  transition:all 0.2s ease;pointer-events:none;
+  z-index:200;
+}
+.nav-item-wrap:hover .nav-dropdown,
+.nav-item-wrap:focus-within .nav-dropdown{
+  opacity:1;visibility:visible;transform:translateY(0);pointer-events:auto;
+}
+.nav-dropdown a{
+  display:block!important;padding:10px 14px!important;
+  border-radius:var(--radius-sm);font-size:0.85rem;
+  white-space:nowrap;
+}
+.nav-dropdown a:hover{background:rgba(255,255,255,0.08)}
+.nav-dropdown .divider{
+  height:1px;background:rgba(255,255,255,0.08);margin:4px 8px;
+}
+
+.nav a.cta-nav{
+  background:var(--gold);color:var(--navy);font-weight:500;
+  padding:8px 20px;
+}
+.nav a.cta-nav:hover{background:var(--gold-light);color:var(--navy)}
+
+.hamburger{
+  display:none;background:none;border:none;
+  width:40px;height:40px;cursor:pointer;
+  flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  padding:8px;border-radius:var(--radius-sm);
+}
+.hamburger span{
+  display:block;width:22px;height:2px;
+  background:var(--gray-200);border-radius:2px;
+  transition:all var(--transition);
+}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--navy) 0%,var(--navy-mid) 40%,var(--navy-light) 100%);
+  padding:calc(var(--header-h)+40px) 24px 80px;
+}
+.hero::before{
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, rgba(201,168,76,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 80% 70%, rgba(201,168,76,0.05) 0%, transparent 50%);
+  pointer-events:none;
+}
+/* Wave pattern */
+.hero-waves{
+  position:absolute;bottom:0;left:0;right:0;height:120px;
+  background:var(--ivory);
+  -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 C200,20 400,100 600,60 C800,20 1000,100 1200,60 L1200,120 L0,120 Z' fill='white'/%3E%3C/svg%3E") no-repeat bottom/100% 100%;
+  mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120'%3E%3Cpath d='M0,60 C200,20 400,100 600,60 C800,20 1000,100 1200,60 L1200,120 L0,120 Z' fill='white'/%3E%3C/svg%3E") no-repeat bottom/100% 100%;
+}
+.hero-content{
+  text-align:center;max-width:800px;position:relative;z-index:1;
+}
+.hero h1{
+  color:var(--white);
+  margin-bottom:0.5rem;
+  font-weight:700;
+}
+.hero .sub{
+  font-size:clamp(1rem,2.2vw,1.35rem);
+  color:var(--gold-light);
+  margin-bottom:0.75rem;
+  font-weight:400;
+  line-height:1.6;
+}
+.hero .sub-en{
+  font-family:var(--font-en);
+  font-size:clamp(0.85rem,1.5vw,1.05rem);
+  color:var(--gray-400);
+  letter-spacing:0.06em;
+  margin-bottom:1.5rem;
+  font-weight:300;
+}
+.hero .desc{
+  color:var(--gray-400);
+  font-size:clamp(0.95rem,1.5vw,1.1rem);
+  max-width:600px;margin:0 auto 1.5rem;
+  line-height:1.8;
+}
+.hero .btn-group{justify-content:center}
+
+/* Decorative music notes */
+.hero-note{
+  position:absolute;
+  color:rgba(201,168,76,0.06);
+  font-size:12rem;
+  pointer-events:none;
+  font-family:Georgia,serif;
+}
+.hero-note:nth-child(1){top:10%;left:5%;transform:rotate(-15deg)}
+.hero-note:nth-child(2){bottom:20%;right:8%;transform:rotate(20deg);font-size:8rem}
+
+/* ===== ABOUT ===== */
+.about-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+}
+.about-text{font-size:1.05rem;line-height:1.9}
+.about-cards{
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.about-card{
+  background:var(--white);
+  border-radius:var(--radius);
+  padding:24px;
+  box-shadow:var(--shadow);
+  border-top:3px solid var(--gold);
+  transition:transform var(--transition);
+}
+.about-card:hover{transform:translateY(-2px)}
+.about-card .icon{font-size:1.8rem;margin-bottom:8px}
+.about-card h4{font-size:1rem;margin-bottom:4px}
+.about-card p{font-size:0.88rem;margin:0;color:var(--gray-500)}
+
+/* ===== MEMBERS ===== */
+.members-section{background:var(--white)}
+.members-voice-group{margin-bottom:2rem}
+.members-voice-header{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 16px;border-radius:var(--radius-sm);
+  margin-bottom:8px;cursor:pointer;
+  transition:background var(--transition);
+  border:1px solid var(--gray-200);
+}
+.members-voice-header:hover{background:var(--gray-100)}
+.members-voice-header h3{font-size:1rem;margin:0}
+.members-voice-header .count{
+  margin-left:auto;font-size:0.82rem;
+  color:var(--gray-500);font-family:var(--font-en);
+}
+.members-voice-header .toggle-icon{
+  font-size:0.75rem;color:var(--gray-400);
+  transition:transform var(--transition);
+}
+.members-voice-header.collapsed .toggle-icon{transform:rotate(-90deg)}
+.member-tag{
+  display:inline-block;
+  padding:5px 14px;margin:3px 4px;
+  border-radius:99px;
+  font-size:0.85rem;
+  background:var(--gray-100);
+  border:1px solid var(--gray-200);
+  transition:all var(--transition);
+}
+.member-tag:hover{border-color:var(--gold);background:var(--gold-glow)}
+.member-tag.soprano{border-left:3px solid #72243E}
+.member-tag.alto{border-left:3px solid #3C3489}
+.member-tag.tenor{border-left:3px solid #0C447C}
+.member-tag.bass{border-left:3px solid #27500A}
+.members-add-form{
+  background:var(--ivory);border-radius:var(--radius);
+  padding:24px;margin-top:1.5rem;
+  border:1px solid var(--gray-200);
+}
+.members-add-form h3{font-size:1.05rem;margin-bottom:0.5rem}
+.members-add-form .form-inline{
+  display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:10px;align-items:end;
+}
+.members-add-form .form-group{margin-bottom:0}
+.members-add-form label{font-size:0.82rem}
+
+/* ===== MISSION ===== */
+.mission{background:var(--white)}
+.mission-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:2rem;
+}
+.mission-card{
+  text-align:center;padding:32px 24px;
+  border-radius:var(--radius);
+  border:1px solid var(--gray-200);
+  transition:all var(--transition);
+}
+.mission-card:hover{border-color:var(--gold);box-shadow:var(--shadow)}
+.mission-card .icon{font-size:2.5rem;margin-bottom:12px}
+.mission-card h3{margin-bottom:8px}
+.mission-card p{font-size:0.93rem;margin:0}
+
+/* ===== EVENTS ===== */
+.events-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:24px;
+}
+.event-card{
+  background:var(--white);border-radius:var(--radius);
+  overflow:hidden;box-shadow:var(--shadow);
+  transition:transform var(--transition);
+  border:1px solid var(--gray-200);
+}
+.event-card:hover{transform:translateY(-3px)}
+.event-img{
+  height:180px;
+  background:linear-gradient(135deg,var(--navy),var(--navy-light));
+  display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;
+}
+.event-img::after{
+  content:'🎭';font-size:3rem;opacity:0.15;
+}
+.event-body{padding:20px 24px}
+.event-body h3{font-size:1.15rem;margin-bottom:6px}
+.event-meta{font-size:0.88rem;color:var(--gray-500);margin-bottom:8px;display:flex;gap:16px;flex-wrap:wrap}
+.event-meta span{display:flex;align-items:center;gap:4px}
+.event-body p{font-size:0.9rem;margin-bottom:12px}
+.event-body .btn{margin-top:4px}
+
+/* ===== JOIN ===== */
+.join{
+  background:linear-gradient(135deg,var(--ivory-dark),var(--ivory));
+}
+.join-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:start;
+}
+.join-info h2{margin-bottom:0.5rem}
+.join-info .lead{font-size:1.05rem;margin-bottom:1.5rem}
+.join-details{
+  display:grid;gap:12px;margin-top:1.5rem;
+}
+.join-detail{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:14px 18px;background:var(--white);
+  border-radius:var(--radius-sm);border:1px solid var(--gray-200);
+}
+.join-detail .icon{font-size:1.3rem;flex-shrink:0;margin-top:1px}
+.join-detail strong{display:block;font-size:0.93rem}
+.join-detail span{font-size:0.85rem;color:var(--gray-500)}
+.join-form{
+  background:var(--white);border-radius:var(--radius);
+  padding:32px;box-shadow:var(--shadow-lg);
+  border:1px solid var(--gray-200);
+}
+.form-group{margin-bottom:16px}
+.form-group label{
+  display:block;font-size:0.88rem;font-weight:500;
+  margin-bottom:4px;color:var(--text);
+}
+.form-group .required{color:#c0392b}
+.form-input,.form-select,.form-textarea{
+  width:100%;padding:11px 14px;
+  border:1px solid var(--gray-200);border-radius:var(--radius-sm);
+  font-size:0.95rem;font-family:inherit;
+  background:var(--ivory);color:var(--text);
+  transition:border-color var(--transition);
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{
+  outline:none;border-color:var(--gold);
+  box-shadow:0 0 0 3px var(--gold-glow);
+}
+.form-textarea{min-height:80px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.form-select{appearance:auto}
+
+/* ===== MEDIA/GALLERY ===== */
+.gallery-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.gallery-item{
+  aspect-ratio:4/3;
+  border-radius:var(--radius-sm);overflow:hidden;
+  position:relative;cursor:pointer;
+  background:linear-gradient(135deg,var(--navy),var(--navy-light));
+  display:flex;align-items:center;justify-content:center;
+  transition:transform var(--transition);
+  border:1px solid var(--gray-200);
+}
+.gallery-item:hover{transform:scale(1.02)}
+.gallery-item .label{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:10px 14px;
+  background:linear-gradient(transparent,rgba(15,26,46,0.8));
+  color:var(--ivory);font-size:0.85rem;
+}
+.gallery-item .placeholder-icon{font-size:3rem;opacity:0.12}
+.gallery-note{text-align:center;margin-top:1.5rem;color:var(--gray-500);font-size:0.93rem}
+
+/* ===== BOOKING ===== */
+.booking{
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+  color:var(--ivory);
+}
+.booking h2{color:var(--white)}
+.booking p{color:var(--gray-400);font-size:1.05rem;max-width:700px}
+.booking a{color:var(--gold-light)}
+.booking .btn-group{margin-top:1rem}
+
+/* ===== SUPPORT ===== */
+.support-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;
+}
+.support-text{font-size:1.05rem}
+.support-logos{
+  display:flex;gap:20px;flex-wrap:wrap;align-items:center;
+  justify-content:center;
+}
+.support-logo-placeholder{
+  width:140px;height:80px;
+  border:2px dashed var(--gray-200);
+  border-radius:var(--radius-sm);
+  display:flex;align-items:center;justify-content:center;
+  font-size:0.8rem;color:var(--gray-400);
+  text-align:center;padding:8px;
+}
+
+/* ===== CONTACT ===== */
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:50px;
+}
+.contact-info h2{margin-bottom:0.5rem}
+.contact-detail{margin-bottom:20px}
+.contact-detail h4{font-size:0.95rem;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.contact-detail p{font-size:0.93rem;margin:0;color:var(--gray-500)}
+.contact-social{display:flex;gap:12px;margin-top:1rem}
+.contact-social a{
+  width:44px;height:44px;
+  border-radius:50%;
+  border:1px solid var(--gray-200);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.2rem;transition:all var(--transition);
+  color:var(--gray-500);text-decoration:none;
+}
+.contact-social a:hover{border-color:var(--gold);color:var(--gold)}
+.contact-map{
+  border-radius:var(--radius);overflow:hidden;
+  height:250px;margin-top:1.5rem;
+  background:var(--gray-200);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray-500);font-size:0.9rem;
+}
+.contact-form{
+  background:var(--white);border-radius:var(--radius);
+  padding:32px;box-shadow:var(--shadow);
+  border:1px solid var(--gray-200);
+}
+
+/* ===== FOOTER ===== */
+.footer{
+  background:var(--navy);color:var(--gray-400);
+  padding:48px 24px 24px;
+}
+.footer-inner{max-width:var(--max-w);margin:0 auto}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;
+  padding-bottom:32px;border-bottom:1px solid rgba(255,255,255,0.08);
+  margin-bottom:24px;
+}
+.footer-brand .logo-text{color:var(--ivory)}
+.footer-brand p{font-size:0.88rem;margin-top:8px;color:var(--gray-400)}
+.footer-col h4{
+  color:var(--ivory);font-size:0.93rem;margin-bottom:12px;font-weight:600;
+}
+.footer-col a{
+  display:block;padding:4px 0;font-size:0.88rem;
+  color:var(--gray-400);text-decoration:none;
+  transition:color var(--transition);
+}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:8px;
+  font-size:0.82rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:900px){
+  .about-grid{grid-template-columns:1fr}
+  .join-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .support-grid{grid-template-columns:1fr}
+  .mission-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .nav{
+    position:fixed;top:var(--header-h);left:0;right:0;
+    background:rgba(15,26,46,0.98);
+    backdrop-filter:blur(12px);
+    flex-direction:column;padding:16px;gap:4px;
+    transform:translateY(-100%);opacity:0;
+    transition:all var(--transition);
+    pointer-events:none;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .nav.open{transform:translateY(0);opacity:1;pointer-events:auto}
+  .nav a{width:100%;padding:12px 16px}
+  .nav-item-wrap{width:100%}
+  .nav-item-wrap > a::after{right:16px;font-size:9px}
+  .nav-dropdown{position:static;opacity:1;visibility:visible;transform:none;pointer-events:auto;display:none;background:rgba(0,0,0,0.2);margin-top:2px}
+  .nav-item-wrap.open .nav-dropdown{display:block}
+  .nav-item-wrap > a::after{content:'▶'}
+  .nav-item-wrap.open > a::after{content:'▼'}
+  .events-grid{grid-template-columns:1fr}
+  .about-cards{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .members-add-form .form-inline{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr;gap:24px}
+  .footer-bottom{flex-direction:column;text-align:center}
+  .btn-group{flex-direction:column}.btn-group .btn{width:100%;justify-content:center}
+}
+@media(max-width:480px){
+  .gallery-grid{grid-template-columns:1fr}
+  .hero{padding:calc(var(--header-h)+32px) 16px 60px}
+  section{padding:2.5rem 0}
+  .container{padding:0 16px}
+  .join-form,.contact-form{padding:24px 20px}
+}
+
+/* ===== SCROLL ANIMATION (lightweight) ===== */
+@media(prefers-reduced-motion:no-preference){
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header class="header" id="header">
+  <div class="header-inner">
+    <a href="#" class="logo" aria-label="金声合唱团首页">
+      <div class="logo-icon">♩</div>
+      <div>
+        <div class="logo-text">金声合唱团</div>
+        <div class="logo-en">Golden Voice Choir</div>
+      </div>
+    </a>
+    <nav class="nav" id="mainNav" role="navigation" aria-label="主导航">
+      <a href="#about">关于我们 About</a>
+      <div class="nav-item-wrap">
+        <a href="#members">团队 Team</a>
+        <div class="nav-dropdown">
+          <a href="#members">👥 成员名录</a>
+          <a href="#gallery">📸 照片墙</a>
+          <div class="divider"></div>
+          <a href="portal.html" target="_blank" style="color:var(--gold);font-weight:500">🔒 团员入口</a>
+        </div>
+      </div>
+      <a href="#events">演出 Concerts</a>
+      <a href="#join">加入我们 Join</a>
+      <a href="#contact">联系 Contact</a>
+      <a href="portal.html" target="_blank" class="cta-nav">🔒 团员入口 →</a>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="切换导航菜单" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home" aria-label="首页">
+  <div class="hero-note">♪</div>
+  <div class="hero-note">♫</div>
+  <div class="hero-content">
+    <h1>金声合唱团</h1>
+    <p class="sub">让华语与世界的声音，在珀斯相遇。</p>
+    <p class="sub-en">Golden Voice Choir · Perth, Western Australia</p>
+    <p class="desc">
+      我们是一支位于澳大利亚珀斯的华人社区合唱团，以合唱连接音乐、文化与人与人之间的情感。
+    </p>
+    <div class="btn-group">
+      <a href="#join" class="btn btn-primary">加入我们 Join Us →</a>
+      <a href="#events" class="btn btn-outline">查看演出 Concerts</a>
+      <a href="#contact" class="btn btn-white">联系我们 Contact</a>
+    </div>
+  </div>
+  <div class="hero-waves" aria-hidden="true"></div>
+</section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" aria-label="关于我们">
+  <div class="container">
+    <div class="section-label fade-in">About</div>
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <h2>关于金声合唱团</h2>
+        <p>
+          金声合唱团扎根于澳大利亚珀斯，汇聚热爱歌唱的人们。我们通过中文歌曲、经典合唱作品及多元文化曲目，表达对生活、社区与文化记忆的热爱。
+        </p>
+        <p>
+          这里既是音乐排练的空间，也是朋友相聚、文化交流与共同成长的社区。无论你来自哪里、讲什么语言，只要热爱歌唱，这里都有你的位置。
+        </p>
+      </div>
+      <div class="about-cards fade-in">
+        <div class="about-card">
+          <div class="icon">📍</div>
+          <h4>位于珀斯</h4>
+          <p>扎根西澳珀斯，面向本地华人社区与多元文化受众。</p>
+        </div>
+        <div class="about-card">
+          <div class="icon">🎤</div>
+          <h4>热爱歌唱者开放</h4>
+          <p>欢迎有经验或零基础者，只要愿意认真排练、热爱歌唱。</p>
+        </div>
+        <div class="about-card">
+          <div class="icon">🎼</div>
+          <h4>合唱训练与舞台</h4>
+          <p>重视系统排练与演出呈现，追求有品质的音乐表达。</p>
+        </div>
+        <div class="about-card">
+          <div class="icon">🌏</div>
+          <h4>连接社区与文化</h4>
+          <p>在华人社区与多元文化观众之间搭建音乐的桥梁。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MEMBERS ===== -->
+<section class="members-section" id="members" aria-label="团员名录">
+  <div class="container">
+    <div class="section-label fade-in">Our Members</div>
+    <h2 class="fade-in">团员名录</h2>
+    <p class="fade-in" style="margin-bottom:2rem;max-width:700px">
+      我们来自不同的背景，因歌唱而相聚。以下是金声合唱团的声部分布与团员名单。
+    </p>
+    <div id="membersContainer" class="fade-in"></div>
+    <div class="members-add-form fade-in" id="addMemberForm">
+      <h3>➕ 新增团员</h3>
+      <p style="font-size:0.88rem;color:var(--gray-500);margin-bottom:12px">录入新团员信息，自动加入对应声部列表。</p>
+      <div class="form-inline">
+        <div class="form-group">
+          <label>姓名 <span style="color:#c0392b">*</span></label>
+          <input class="form-input" id="newMemName" type="text" placeholder="姓名" style="font-size:0.9rem;padding:8px 12px">
+        </div>
+        <div class="form-group">
+          <label>声部</label>
+          <select class="form-select" id="newMemPart" style="font-size:0.9rem;padding:8px 12px">
+            <option value="soprano">女高音 Soprano</option>
+            <option value="alto">女低音 Alto</option>
+            <option value="tenor">男高音 Tenor</option>
+            <option value="bass">男低音 Bass</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>备注</label>
+          <input class="form-input" id="newMemNote" type="text" placeholder="可选" style="font-size:0.9rem;padding:8px 12px">
+        </div>
+        <button class="btn btn-primary" onclick="addMember()" style="padding:8px 18px;font-size:0.9rem;white-space:nowrap">➕ 添加</button>
+      </div>
+      <p style="font-size:0.8rem;color:var(--gray-400);margin-top:8px">数据保存在你的浏览器中，刷新不丢失。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== MISSION ===== -->
+<section class="mission" id="mission" aria-label="使命">
+  <div class="container" style="text-align:center">
+    <div class="section-label fade-in">Our Mission</div>
+    <h2 class="fade-in">用合唱连接社区</h2>
+    <div class="mission-grid fade-in">
+      <div class="mission-card">
+        <div class="icon">🎶</div>
+        <h3>音乐</h3>
+        <p>通过系统排练提升合唱表现力，让每一首歌都值得被听见。</p>
+      </div>
+      <div class="mission-card">
+        <div class="icon">🌏</div>
+        <h3>文化</h3>
+        <p>让中文歌曲与多元文化曲目在珀斯被听见，连接不同语言与传统。</p>
+      </div>
+      <div class="mission-card">
+        <div class="icon">🤝</div>
+        <h3>社区</h3>
+        <p>为不同年龄和背景的成员提供共同歌唱的空间，因音乐而相聚。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== EVENTS ===== -->
+<section id="events" aria-label="近期演出">
+  <div class="container">
+    <div class="section-label fade-in">Concerts &amp; Events</div>
+    <h2 class="fade-in">近期演出</h2>
+    <div class="events-grid fade-in">
+      <!-- Event 1 -->
+      <div class="event-card">
+        <div class="event-img" role="img" aria-label="冬季音乐会占位图"></div>
+        <div class="event-body">
+          <h3>2026 年冬季音乐会</h3>
+          <div class="event-meta">
+            <span>📅 待定</span>
+            <span>⏰ 待定</span>
+            <span>📍 地点待定 · Perth, WA</span>
+          </div>
+          <p>更多信息即将公布。敬请关注我们的最新通知。</p>
+          <a href="#contact" class="btn btn-outline" style="padding:10px 20px;font-size:0.88rem">了解详情 →</a>
+        </div>
+      </div>
+      <!-- Event 2 -->
+      <div class="event-card">
+        <div class="event-img" role="img" aria-label="社区演出占位图"></div>
+        <div class="event-body">
+          <h3>社区音乐分享会</h3>
+          <div class="event-meta">
+            <span>📅 筹备中</span>
+            <span>⏰ 待定</span>
+            <span>📍 Perth, WA</span>
+          </div>
+          <p>面向社区的免费音乐分享活动，用歌声拉近距离。具体时间地点待定。</p>
+          <a href="#contact" class="btn btn-outline" style="padding:10px 20px;font-size:0.88rem">了解详情 →</a>
+        </div>
+      </div>
+      <!-- Event 3 -->
+      <div class="event-card">
+        <div class="event-img" role="img" aria-label="排练开放日占位图"></div>
+        <div class="event-body">
+          <h3>排练开放日</h3>
+          <div class="event-meta">
+            <span>📅 待定</span>
+            <span>⏰ 待定</span>
+            <span>📍 Perth, WA</span>
+          </div>
+          <p>欢迎来现场感受我们的排练氛围，与团员们面对面交流。无需预约。</p>
+          <a href="#join" class="btn btn-outline" style="padding:10px 20px;font-size:0.88rem">我要参加 →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== JOIN US ===== -->
+<section class="join" id="join" aria-label="加入我们">
+  <div class="container">
+    <div class="section-label fade-in">Join Us</div>
+    <div class="join-grid">
+      <div class="join-info fade-in">
+        <h2>欢迎热爱歌唱的你加入</h2>
+        <p class="lead">
+          无论你有合唱经验，还是只是热爱歌唱，只要愿意认真排练、尊重团队、享受音乐，都欢迎与我们联系。
+        </p>
+        <div class="join-details">
+          <div class="join-detail">
+            <span class="icon">📍</span>
+            <div>
+              <strong>排练地点</strong>
+              <span>Perth, Western Australia · 具体地址请联系确认</span>
+            </div>
+          </div>
+          <div class="join-detail">
+            <span class="icon">⏰</span>
+            <div>
+              <strong>排练时间</strong>
+              <span>待补充 · 确认入团后将统一通知</span>
+            </div>
+          </div>
+          <div class="join-detail">
+            <span class="icon">👥</span>
+            <div>
+              <strong>适合人群</strong>
+              <span>热爱歌唱、愿意稳定参加排练者。无论有无经验。</span>
+            </div>
+          </div>
+          <div class="join-detail">
+            <span class="icon">🎤</span>
+            <div>
+              <strong>四个声部</strong>
+              <span>女高音 Soprano · 女低音 Alto · 男高音 Tenor · 男低音 Bass</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="join-form fade-in" id="joinForm">
+        <h3 style="margin-bottom:1.2rem;font-size:1.15rem">提交加入申请</h3>
+        <form onsubmit="submitJoin(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>姓名 <span class="required">*</span></label>
+              <input class="form-input" type="text" required placeholder="你的名字">
+            </div>
+            <div class="form-group">
+              <label>声部</label>
+              <select class="form-select">
+                <option>女高音 Soprano</option>
+                <option>女低音 Alto</option>
+                <option>男高音 Tenor</option>
+                <option>男低音 Bass</option>
+                <option>不确定 / 听安排</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>邮箱 <span class="required">*</span></label>
+              <input class="form-input" type="email" required placeholder="your@email.com">
+            </div>
+            <div class="form-group">
+              <label>电话</label>
+              <input class="form-input" type="tel" placeholder="04xx xxx xxx">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>是否有合唱经验？</label>
+            <select class="form-select">
+              <option>有合唱经验</option>
+              <option>有一些经验</option>
+              <option>没有经验，但热爱歌唱</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>想加入的原因</label>
+            <textarea class="form-textarea" placeholder="简单说说你为什么想加入金声合唱团…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:4px">提交加入申请 →</button>
+        </form>
+        <p style="font-size:0.8rem;color:var(--gray-400);margin-top:12px;text-align:center">
+          提交后我们会尽快与你联系。排练具体地址将在确认后告知。
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GALLERY ===== -->
+<section id="gallery" aria-label="照片与视频">
+  <div class="container">
+    <div class="section-label fade-in">Gallery</div>
+    <h2 class="fade-in">照片与视频</h2>
+    <div class="gallery-grid fade-in">
+      <div class="gallery-item"><span class="placeholder-icon">🎵</span><span class="label">排练瞬间</span></div>
+      <div class="gallery-item"><span class="placeholder-icon">🎭</span><span class="label">舞台演出</span></div>
+      <div class="gallery-item"><span class="placeholder-icon">👥</span><span class="label">团员合影</span></div>
+      <div class="gallery-item"><span class="placeholder-icon">🎶</span><span class="label">社区活动</span></div>
+      <div class="gallery-item"><span class="placeholder-icon">🎤</span><span class="label">排练花絮</span></div>
+      <div class="gallery-item"><span class="placeholder-icon">🌟</span><span class="label">演出回顾</span></div>
+    </div>
+    <p class="gallery-note">更多演出照片与视频即将更新。</p>
+  </div>
+</section>
+
+<!-- ===== BOOKING ===== -->
+<section class="booking" id="booking" aria-label="邀请演出">
+  <div class="container" style="text-align:center">
+    <div class="section-label fade-in" style="color:var(--gold-light)">Booking &amp; Collaboration</div>
+    <h2 class="fade-in" style="color:var(--white)">邀请金声合唱团演出</h2>
+    <p class="fade-in">
+      金声合唱团欢迎社区活动、文化节庆、学校及机构演出邀请。我们可根据活动主题提供中文歌曲、经典合唱曲目及多元文化曲目，为您的活动增添温暖与质感。
+    </p>
+    <div class="btn-group" style="justify-content:center" class="fade-in">
+      <a href="#contact" class="btn btn-primary">预约演出 / 联系合作 →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SUPPORT ===== -->
+<section id="support" aria-label="支持我们">
+  <div class="container">
+    <div class="section-label fade-in">Support Us</div>
+    <div class="support-grid">
+      <div class="support-text fade-in">
+        <h2>支持金声合唱团</h2>
+        <p>
+          您的支持将帮助我们持续开展排练、演出、曲目建设和社区文化活动。无论是个人捐赠还是企业赞助，每一份心意都让我们走得更远。
+        </p>
+        <div class="btn-group">
+          <a href="#contact" class="btn btn-primary">成为支持者 →</a>
+          <a href="#contact" class="btn btn-outline">联系赞助合作</a>
+        </div>
+      </div>
+      <div class="support-logos fade-in">
+        <div class="support-logo-placeholder">赞助商<br>Logo 区域</div>
+        <div class="support-logo-placeholder">赞助商<br>Logo 区域</div>
+        <div class="support-logo-placeholder">赞助商<br>Logo 区域</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="contact" aria-label="联系我们">
+  <div class="container">
+    <div class="section-label fade-in">Contact</div>
+    <div class="contact-grid">
+      <div class="contact-info fade-in">
+        <h2>联系我们</h2>
+        <div class="contact-detail">
+          <h4>📧 邮箱</h4>
+          <p>info@goldenvoicechoir.org</p>
+        </div>
+        <div class="contact-detail">
+          <h4>📍 位置</h4>
+          <p>Perth, Western Australia</p>
+          <p style="font-size:0.85rem;color:var(--gray-400);margin-top:2px">具体排练地点请联系确认</p>
+        </div>
+        <div class="contact-detail">
+          <h4>💬 社交媒体</h4>
+          <p style="font-size:0.9rem">
+            微信 · WhatsApp · Facebook · Instagram<br>
+            <span style="color:var(--gray-400)">（社交媒体账号准备中）</span>
+          </p>
+        </div>
+        <div class="contact-social" aria-label="社交媒体链接">
+          <a href="#" aria-label="微信">💬</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="Instagram">◻</a>
+          <a href="#" aria-label="YouTube">▶</a>
+        </div>
+        <div class="contact-map" role="img" aria-label="珀斯地图占位">
+          🗺️ Perth, Western Australia
+        </div>
+      </div>
+      <div class="contact-form fade-in" id="contactForm">
+        <h3 style="margin-bottom:1.2rem;font-size:1.15rem">发送消息</h3>
+        <form onsubmit="submitContact(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label>姓名 <span class="required">*</span></label>
+              <input class="form-input" type="text" required placeholder="你的名字">
+            </div>
+            <div class="form-group">
+              <label>邮箱 <span class="required">*</span></label>
+              <input class="form-input" type="email" required placeholder="your@email.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label>主题</label>
+            <input class="form-input" type="text" placeholder="如：加入申请、演出邀请、赞助合作">
+          </div>
+          <div class="form-group">
+            <label>留言 <span class="required">*</span></label>
+            <textarea class="form-textarea" required placeholder="写下你想说的话…"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">发送消息 →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo" style="margin-bottom:4px">
+          <div class="logo-icon">♩</div>
+          <div>
+            <div class="logo-text" style="color:var(--ivory)">金声合唱团</div>
+            <div class="logo-en">Golden Voice Choir</div>
+          </div>
+        </div>
+        <p>以合唱连接音乐、文化与社区。<br>Perth, Western Australia</p>
+      </div>
+      <div class="footer-col">
+        <h4>快速链接</h4>
+        <a href="#home">首页 Home</a>
+        <a href="#about">关于我们 About</a>
+        <a href="#members">团队 · 成员名录</a>
+        <a href="portal.html">🔒 团员入口</a>
+        <a href="#events">近期演出 Concerts</a>
+        <a href="#join">加入我们 Join Us</a>
+        <a href="#contact">联系我们 Contact</a>
+      </div>
+      <div class="footer-col">
+        <h4>参与</h4>
+        <a href="#join">申请加入</a>
+        <a href="#booking">邀请演出</a>
+        <a href="#support">支持我们</a>
+        <a href="#gallery">照片与视频</a>
+        <a href="portal.html">🔒 团员入口</a>
+      </div>
+      <div class="footer-col">
+        <h4>联系方式</h4>
+        <a href="mailto:info@goldenvoicechoir.org">📧 info@goldenvoicechoir.org</a>
+        <a href="#">📍 Perth, WA</a>
+        <a href="#">💬 微信</a>
+        <a href="#">📘 Facebook</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Golden Voice Choir. All rights reserved.</span>
+      <span>金声合唱团 · 珀斯 Perth</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ===== Navigation toggle =====
+function toggleNav() {
+  const nav = document.getElementById('mainNav');
+  const ham = document.getElementById('hamburger');
+  nav.classList.toggle('open');
+  ham.classList.toggle('active');
+}
+
+// Close nav on link click (mobile)
+document.querySelectorAll('.nav a').forEach(a => {
+  a.addEventListener('click', (e) => {
+    // Don't close nav when clicking the parent of a dropdown (mobile toggle)
+    const wrap = a.closest('.nav-item-wrap');
+    if (wrap && window.innerWidth <= 768) {
+      e.preventDefault();
+      wrap.classList.toggle('open');
+      return;
+    }
+    document.getElementById('mainNav').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('active');
+  });
+});
+
+// Close nav on scroll
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('mainNav');
+  if (nav.classList.contains('open') && Math.abs(window.scrollY - lastScroll) > 60) {
+    nav.classList.remove('open');
+    document.getElementById('hamburger').classList.remove('active');
+  }
+  lastScroll = window.scrollY;
+});
+
+// ===== Scroll-triggered fade-in =====
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+// ===== Form handlers =====
+function submitJoin(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const orig = btn.textContent;
+  btn.textContent = '✓ 已提交，我们会尽快联系你';
+  btn.style.background = '#2e7d32';
+  btn.style.color = '#fff';
+  setTimeout(() => {
+    btn.textContent = orig;
+    btn.style.background = '';
+    btn.style.color = '';
+    e.target.reset();
+  }, 3000);
+}
+
+function submitContact(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('button[type="submit"]');
+  const orig = btn.textContent;
+  btn.textContent = '✓ 消息已发送';
+  btn.style.background = '#2e7d32';
+  btn.style.color = '#fff';
+  setTimeout(() => {
+    btn.textContent = orig;
+    btn.style.background = '';
+    btn.style.color = '';
+    e.target.reset();
+  }, 3000);
+}
+
+// ===== Member management =====
+const MEMBER_DATA_KEY = 'gvc_members_v1';
+const DEFAULT_MEMBERS = {
+  soprano: ['叶晓君','李洪玲','范亚俊','王丽君','苏敏娜','邹纪平','孙爱丽','尉立萍','罗佑妮','苏青英','宋丽萍','连品兰','王皎地','陈宗敏','蔡玉璋','岳新民','吕红娜','宗慧敏','周青','俞瑾'],
+  alto: [],
+  tenor: ['刘义鑫','张来专','区炜丰','梁吉','李松','谢胜荣'],
+  bass: ['容子燊','华家祥','漆智铭','李阳寿','李松','朱光荣','张百鑫'],
+};
+const VOICE_LABELS = {
+  soprano: { label:'女高音', en:'Soprano', color:'#72243E' },
+  alto:    { label:'女低音', en:'Alto',    color:'#3C3489' },
+  tenor:   { label:'男高音', en:'Tenor',   color:'#0C447C' },
+  bass:    { label:'男低音', en:'Bass',    color:'#27500A' },
+};
+
+let membersData;
+
+function loadMembers(){
+  try{const r=localStorage.getItem(MEMBER_DATA_KEY);if(r){membersData=JSON.parse(r);return}}catch(e){}
+  membersData = JSON.parse(JSON.stringify(DEFAULT_MEMBERS));
+  saveMembers();
+}
+function saveMembers(){localStorage.setItem(MEMBER_DATA_KEY, JSON.stringify(membersData))}
+
+function renderMembers(){
+  const el = document.getElementById('membersContainer');
+  const parts = ['soprano','alto','tenor','bass'];
+  el.innerHTML = parts.map(p => {
+    const v = VOICE_LABELS[p];
+    const names = membersData[p] || [];
+    if (!names.length) return '';
+    const tagClass = { soprano:'soprano', alto:'alto', tenor:'tenor', bass:'bass' };
+    return `<div class="members-voice-group">
+      <div class="members-voice-header" onclick="toggleVoice(this)">
+        <h3>${v.label} <span style="font-weight:400;color:var(--gray-500)">${v.en}</span></h3>
+        <span class="count">${names.length} 人</span>
+        <span class="toggle-icon">▼</span>
+      </div>
+      <div class="members-voice-body">
+        ${names.map(n => `<span class="member-tag ${tagClass[p]}">${n}</span>`).join('')}
+      </div>
+    </div>`;
+  }).filter(Boolean).join('') || '<p style="color:var(--gray-500);text-align:center;padding:2rem 0">暂无团员数据</p>';
+}
+
+function toggleVoice(headerEl){
+  headerEl.classList.toggle('collapsed');
+  const body = headerEl.nextElementSibling;
+  if (body) body.style.display = body.style.display === 'none' ? 'block' : 'none';
+}
+
+function addMember(){
+  const name = document.getElementById('newMemName').value.trim();
+  const part = document.getElementById('newMemPart').value;
+  if (!name) { alert('请输入姓名'); return; }
+  if (!membersData[part]) membersData[part] = [];
+  membersData[part].push(name);
+  saveMembers();
+  renderMembers();
+  document.getElementById('newMemName').value = '';
+  document.getElementById('newMemNote').value = '';
+  // scroll to show new list
+  document.getElementById('membersContainer').scrollIntoView({behavior:'smooth',block:'start'});
+  // feedback
+  const btn = document.querySelector('.members-add-form .btn');
+  const orig = btn.textContent;
+  btn.textContent = '✓ 已添加 ' + name;
+  btn.style.background = '#2e7d32'; btn.style.color = '#fff';
+  setTimeout(() => { btn.textContent = orig; btn.style.background = ''; btn.style.color = ''; }, 2000);
+}
+
+loadMembers();
+renderMembers();
+
+// ===== Header background on scroll =====
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('header');
+  if (window.scrollY > 50) {
+    header.style.background = 'rgba(15,26,46,0.96)';
+  } else {
+    header.style.background = 'rgba(15,26,46,0.92)';
+  }
+});
+</script>
+</body>
+</html>

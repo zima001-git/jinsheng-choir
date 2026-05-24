@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>团员入口 · 金声合唱团 Golden Voice Choir</title>
+<meta name="description" content="金声合唱团内部管理平台">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0f1a2e;--navy-mid:#1a2d4a;--gold:#c9a84c;--gold-light:#e8d5a0;
+  --ivory:#faf7f2;--ivory-dark:#f0ebe3;--white:#fff;
+  --gray-100:#f5f3ef;--gray-200:#e8e4dd;--gray-400:#b0a99c;--gray-500:#8a8070;
+  --text:#1a1410;--text-light:#655e50;
+  --radius:10px;--radius-sm:6px;--nav-h:54px;
+  --shadow:0 2px 12px rgba(15,26,46,0.08);
+  --font:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+}
+body{font-family:var(--font);background:var(--ivory);color:var(--text);font-size:15px;line-height:1.6;padding-bottom:var(--nav-h)}
+.container{max-width:600px;margin:0 auto;padding:0 16px}
+
+/* Top bar */
+.topbar{
+  background:var(--navy);color:var(--ivory);
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:50;
+}
+.topbar-left{display:flex;align-items:center;gap:10px}
+.topbar-back{
+  color:var(--gold);font-size:13px;text-decoration:none;
+  display:flex;align-items:center;gap:4px;
+}
+.topbar-back:hover{color:var(--gold-light)}
+.topbar-title{font-size:15px;font-weight:600}
+.topbar-sub{font-size:11px;color:var(--gray-400)}
+
+/* Bottom nav */
+.bottom-nav{
+  position:fixed;bottom:0;left:0;right:0;height:var(--nav-h);
+  background:rgba(255,255,255,0.96);backdrop-filter:blur(10px);
+  border-top:1px solid var(--gray-200);
+  display:flex;align-items:center;z-index:100;overflow-x:auto;
+}
+.nav-item{
+  flex:1;min-width:48px;
+  display:flex;flex-direction:column;align-items:center;gap:1px;
+  font-size:9px;color:var(--gray-500);cursor:pointer;padding:6px 2px;
+  border:none;background:none;font-family:inherit;transition:color 0.15s;
+}
+.nav-item .ni{font-size:18px;line-height:1}
+.nav-item.active{color:var(--gold)}
+.nav-item:hover{color:var(--navy)}
+
+/* Cards */
+.card{background:var(--white);border-radius:var(--radius);padding:16px;margin-bottom:10px;border:1px solid var(--gray-200);}
+.card-title{font-size:14px;font-weight:600;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+
+/* Stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:10px}
+.stat-box{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:10px;text-align:center}
+.stat-box .n{font-size:20px;font-weight:700;color:var(--navy)}
+.stat-box .l{font-size:10px;color:var(--gray-500);margin-top:1px}
+
+/* Feature grid */
+.feat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.feat-card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius);padding:14px;text-align:center;cursor:pointer;transition:all 0.15s}
+.feat-card:hover{border-color:var(--gold);transform:translateY(-1px)}
+.feat-card .fi{font-size:24px}
+.feat-card .fn{font-size:13px;font-weight:500;margin-top:4px}
+.feat-card .fd{font-size:10px;color:var(--gray-500);margin-top:2px}
+
+/* Voice badges */
+.badge{display:inline-block;font-size:10px;padding:2px 7px;border-radius:99px;font-weight:500}
+.badge-s{background:#FBEAF0;color:#72243E}
+.badge-a{background:#EEEDFE;color:#3C3489}
+.badge-t{background:#E6F1FB;color:#0C447C}
+.badge-b{background:#EAF3DE;color:#27500A}
+
+/* Member tags */
+.mtag{display:inline-block;padding:4px 12px;margin:3px 4px;border-radius:99px;font-size:13px;background:var(--gray-100);border:1px solid var(--gray-200)}
+.mtag.s{border-left:3px solid #72243E}
+.mtag.a{border-left:3px solid #3C3489}
+.mtag.t{border-left:3px solid #0C447C}
+.mtag.b{border-left:3px solid #27500A}
+
+/* Voice group */
+.vgroup{margin-bottom:16px}
+.vheader{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--radius-sm);margin-bottom:6px;cursor:pointer;border:1px solid var(--gray-200);transition:background 0.15s}
+.vheader:hover{background:var(--gray-100)}
+.vheader h3{font-size:14px;margin:0}
+.vheader .cnt{margin-left:auto;font-size:12px;color:var(--gray-500)}
+.vheader .tog{font-size:10px;color:var(--gray-400);transition:transform 0.2s}
+.vheader.collapsed .tog{transform:rotate(-90deg)}
+.vbody{padding:4px 0}
+
+/* Forms */
+.form-group{margin-bottom:10px}
+.form-group label{display:block;font-size:12px;font-weight:500;margin-bottom:3px;color:var(--text)}
+input[type="text"],input[type="url"],input[type="password"],input[type="date"],input[type="time"],input[type="number"],select,textarea{
+  width:100%;padding:9px 12px;border:1px solid var(--gray-200);border-radius:var(--radius-sm);
+  font-size:14px;font-family:inherit;background:var(--ivory);color:var(--text);outline:none;transition:border-color 0.2s
+}
+input:focus,textarea:focus,select:focus{border-color:var(--gold)}
+textarea{min-height:50px;resize:vertical}
+select{appearance:auto}
+.form-inline{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+@media(max-width:420px){.form-inline{grid-template-columns:1fr}}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;gap:4px;padding:8px 16px;border:none;border-radius:var(--radius-sm);font-size:13px;font-weight:500;cursor:pointer;font-family:inherit;transition:all 0.15s;text-decoration:none}
+.btn-gold{background:var(--gold);color:var(--navy)}
+.btn-gold:hover{background:var(--gold-light)}
+.btn-out{background:transparent;border:1px solid var(--gold);color:var(--gold)}
+.btn-out:hover{background:var(--gold);color:var(--navy)}
+.btn-sm{padding:5px 10px;font-size:11px}
+.btn-w{width:100%;justify-content:center}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse;font-size:12px}
+.tbl th,.tbl td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--gray-200)}
+.tbl th{font-weight:600;color:var(--text-light);background:var(--gray-100);font-size:11px}
+
+/* Calendar */
+.cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-nav span{font-size:14px;font-weight:600}
+.cal-nav button{background:none;border:1px solid var(--gray-200);border-radius:var(--radius-sm);padding:3px 10px;cursor:pointer;font-size:14px;color:var(--text-light)}
+.cal-nav button:hover{border-color:var(--gold);color:var(--gold)}
+.cal-g{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:10px}
+.cal-h{text-align:center;font-size:10px;font-weight:600;color:var(--gray-500);padding:4px 0}
+.cal-d{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:11px;border-radius:4px;cursor:pointer;background:var(--white);border:1px solid var(--gray-200);position:relative}
+.cal-d:hover{border-color:var(--gold)}
+.cal-d.other{color:var(--gray-200)}
+.cal-d.today{border-color:var(--gold);background:rgba(201,168,76,0.08);font-weight:700}
+.cal-d.he::after{content:'';position:absolute;bottom:2px;width:3px;height:3px;border-radius:50%;background:var(--gold)}
+
+/* Tags */
+.tag{display:inline-block;font-size:10px;padding:1px 6px;border-radius:6px}
+.tag-p{background:#fff8e1;color:#f57f17}
+.tag-d{background:#e8f5e9;color:#2e7d32}
+.tag-l{background:#fce4ec;color:#c62828}
+
+/* Media grid */
+.mg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mi{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--radius-sm);overflow:hidden}
+.mi .thumb{height:60px;display:flex;align-items:center;justify-content:center;font-size:20px}
+.mi .info{padding:6px;font-size:11px}
+.mi .info small{display:block;color:var(--gray-500);font-size:10px}
+
+/* Discussion */
+.msg{padding:8px 0;border-bottom:1px solid var(--gray-200)}
+.msg:last-child{border:none}
+.msg-h{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.msg-av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;color:#fff}
+.msg-n{font-weight:600;font-size:12px}
+.msg-t{font-size:10px;color:var(--gray-500)}
+.msg-b{font-size:13px;line-height:1.5;padding-left:32px}
+
+/* Empty */
+.empty{text-align:center;padding:1.5rem 0;color:var(--gray-500);font-size:13px}
+
+/* Small helpers */
+.mt8{margin-top:8px}
+.mb8{margin-bottom:8px}
+.hide{display:none}
+
+/* Pages */
+.page{display:none;padding:12px 0}
+.page.active{display:block;animation:fade 0.2s}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* Event row */
+.erow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--gray-200);font-size:12px}
+.erow:last-child{border:none}
+.erow .del{color:#c0392b;cursor:pointer;background:none;border:none;font-size:13px}
+
+/* Modal */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(15,26,46,0.5);z-index:200;justify-content:center;align-items:center;padding:16px}
+.modal-overlay.show{display:flex}
+.modal{background:var(--white);border-radius:var(--radius);padding:20px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto;box-shadow:0 8px 40px rgba(0,0,0,0.15);animation:fade 0.2s}
+.modal .close{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:var(--gray-400);padding:0 4px}
+.modal .close:hover{color:var(--text)}
+.modal h3{font-size:17px;margin-bottom:2px;padding-right:24px}
+.modal .sub{font-size:12px;color:var(--gray-500);margin-bottom:14px}
+.modal .section{margin-bottom:14px}
+.modal .section h4{font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text-light)}
+
+/* Audio grid - 4 squares */
+.audio-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.audio-card{
+  aspect-ratio:1;border-radius:var(--radius-sm);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;border:1px solid var(--gray-200);
+  background:var(--gray-100);transition:all 0.15s;
+  position:relative;overflow:hidden;
+}
+.audio-card.has-audio:hover{border-color:var(--gold);background:var(--gold-glow)}
+.audio-card .ac-icon{font-size:28px;margin-bottom:4px}
+.audio-card .ac-label{font-size:11px;font-weight:500;color:var(--text)}
+.audio-card .ac-sub{font-size:10px;color:var(--gray-500)}
+.audio-card .ac-play{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(15,26,46,0.4);opacity:0;transition:opacity 0.2s;font-size:32px;color:#fff}
+.audio-card.has-audio:hover .ac-play{opacity:1}
+.audio-card.playing{border-color:var(--gold);background:var(--gold-glow)}
+/* Audio seek bar */
+.audio-card{position:relative}
+.audio-seek{position:absolute;bottom:6px;left:8px;right:8px;height:4px;background:rgba(0,0,0,0.1);border-radius:2px;cursor:pointer;display:none;z-index:5;overflow:hidden}
+.audio-card.playing .audio-seek{display:block}
+.audio-seek:hover{height:6px}
+.audio-seek-fill{height:100%;background:var(--gold);border-radius:2px;width:0%;transition:width 0.1s linear}
+.audio-text{z-index:2;position:relative}
+.audio-card .ac-icon{z-index:2;position:relative}
+.audio-card .ac-label{z-index:2;position:relative}
+.audio-card .ac-sub{z-index:2;position:relative}
+.audio-card .ac-play{z-index:3}
+
+.audio-card.playing .ac-play{opacity:1;background:rgba(201,168,76,0.2)}
+.audio-card audio{display:none}
+
+/* Video card */
+.video-card{
+  width:100%;aspect-ratio:16/9;border-radius:var(--radius-sm);
+  overflow:hidden;cursor:pointer;position:relative;
+  background:linear-gradient(135deg,var(--navy),var(--navy-mid));
+}
+.video-card .vc-play{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(15,26,46,0.3);transition:background 0.2s;
+}
+.video-card:hover .vc-play{background:rgba(15,26,46,0.1)}
+.video-card .vc-play span{font-size:48px;color:rgba(255,255,255,0.9)}
+.video-card .vc-label{position:absolute;bottom:8px;left:10px;font-size:11px;color:rgba(255,255,255,0.7)}
+.video-card iframe{width:100%;height:100%;border:none}
+
+/* Sheet music */
+.sheet-card{
+  width:100%;min-height:120px;max-height:300px;border-radius:var(--radius-sm);
+  overflow:hidden;cursor:pointer;position:relative;
+  background:var(--gray-100);border:1px solid var(--gray-200);
+  display:flex;align-items:center;justify-content:center;
+}
+.sheet-card img{width:100%;height:auto;object-fit:contain;display:block}
+.sheet-card .sc-placeholder{text-align:center;font-size:13px;color:var(--gray-400)}
+.sheet-card .sc-placeholder .sc-icon{font-size:32px;display:block;margin-bottom:4px}
+
+/* Fullscreen image overlay */
+.img-viewer{display:none;position:fixed;inset:0;z-index:300;background:rgba(0,0,0,0.92);cursor:pointer;overflow:auto;padding:10px;text-align:center}
+.img-viewer.show{display:block}
+.img-viewer img{display:inline-block;max-width:100%;height:auto;border-radius:4px;box-shadow:0 4px 40px rgba(0,0,0,0.3);margin:10px auto}
+.img-viewer .close-btn{position:fixed;top:16px;right:20px;color:#fff;font-size:28px;cursor:pointer;z-index:301;background:rgba(0,0,0,0.3);width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none}
+.img-viewer .close-btn:hover{background:rgba(255,255,255,0.2)}
+
+/* Drop zones */
+.drop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.drop-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.drop-zone{
+  border:2px dashed var(--gray-200);border-radius:var(--radius-sm);
+  padding:12px 8px;text-align:center;cursor:pointer;
+  transition:all 0.2s;position:relative;
+  display:flex;flex-direction:column;align-items:center;gap:2px;
+}
+.drop-zone:hover{border-color:var(--gold);background:var(--gold-glow)}
+.drop-zone.dragover{border-color:var(--gold);background:var(--gold-glow);border-style:solid}
+.drop-zone.has-file{border-color:var(--green,#4a9d6a);border-style:solid;background:#edf7ed}
+.drop-zone .dz-icon{font-size:22px;line-height:1}
+.drop-zone .dz-label{font-size:11px;font-weight:500}
+.drop-zone .dz-hint{font-size:9px;color:var(--gray-400)}
+.drop-zone .dz-name{font-size:9px;color:var(--green,#4a9d6a);max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.drop-zone .dz-remove{
+  position:absolute;top:2px;right:4px;font-size:12px;
+  color:var(--gray-400);background:none;border:none;cursor:pointer;display:none;
+}
+.drop-zone.has-file .dz-remove{display:block}
+.drop-zone .dz-fallback{
+  margin-top:4px;font-size:11px;padding:4px 8px;
+  border:1px solid var(--gray-200);border-radius:4px;
+  width:100%;background:var(--ivory);
+}
+.drop-zone .dz-fallback:focus{border-color:var(--gold);outline:none}
+@media(max-width:480px){.drop-grid{grid-template-columns:1fr 1fr}}
+
+/* Repertoire list clickable */
+.rep-row{cursor:pointer;transition:background 0.15s}
+.rep-row:hover{background:var(--gray-100)}
+
+/* Loading overlay */
+.loading-overlay{display:none;position:fixed;inset:0;z-index:9999;background:var(--ivory);flex-direction:column;align-items:center;justify-content:center}
+.loading-overlay.show{display:flex}
+.loading-spinner{width:40px;height:40px;border:4px solid var(--gray-200);border-top-color:var(--gold);border-radius:50%;animation:spin 0.8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{margin-top:16px;font-size:14px;color:var(--gray-500)}
+/* Toast */
+.toast{position:fixed;top:12px;left:50%;transform:translateX(-50%);background:#edf7ed;color:#2e7d32;border:1px solid #c8e6c9;padding:6px 18px;border-radius:var(--radius-sm);font-size:12px;display:none;z-index:999;white-space:nowrap;box-shadow:var(--shadow)}
+
+/* scrollbar */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:var(--gray-200);border-radius:2px}
+</style>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-storage-compat.js"></script>
+</head>
+<body>
+
+<div class="toast" id="toast"></div>
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner"></div>
+  <div class="loading-text">数据加载中...</div>
+</div>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <a class='topbar-back' href='/'>← 金声合唱团</a>
+  </div>
+  <div>
+    <div class="topbar-title">团员入口</div>
+    <div class="topbar-sub">内部管理平台</div>
+  </div>
+  <div style="width:80px"></div>
+</div>
+
+<div class="container" id="app">
+  <!-- HOME -->
+  <div class="page active" id="pg-home">
+    <div class="stats" id="ovStats"></div>
+    <div class="card">
+      <div class="card-title">🎯 功能入口</div>
+      <div class="feat-grid" id="featGrid"></div>
+    </div>
+  </div>
+
+  <!-- MEMBERS -->
+  <div class="page" id="pg-members">
+    <div class="card"><div class="card-title">👥 团员名录</div><div id="memContainer"></div></div>
+    <div class="card">
+      <div class="card-title">➕ 新增团员</div>
+      <div class="form-inline">
+        <div class="form-group"><label>姓名</label><input type="text" id="nmName"></div>
+        <div class="form-group"><label>声部</label>
+          <select id="nmPart"><option value="soprano">女高音</option><option value="alto">女低音</option><option value="tenor">男高音</option><option value="bass">男低音</option></select>
+        </div>
+      </div>
+      <button class="btn btn-gold btn-w" onclick="addMember()">➕ 添加</button>
+    </div>
+  </div>
+
+  <!-- HOMEWORK -->
+  <div class="page" id="pg-hw">
+    <div class="card">
+      <div class="card-title">📤 提交作业</div>
+      <div class="form-inline">
+        <div class="form-group"><label>姓名</label><input type="text" id="hwName"></div>
+        <div class="form-group"><label>声部</label>
+          <select id="hwPart"><option value="soprano">女高音</option><option value="alto">女低音</option><option value="tenor">男高音</option><option value="bass">男低音</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label>作业内容</label><textarea id="hwNote" placeholder="描述作业内容..."></textarea></div>
+      <div class="form-group"><label>链接（可选）</label><input type="url" id="hwLink" placeholder="https://..."></div>
+      <button class="btn btn-gold btn-w" onclick="subHW()">📤 提交</button>
+    </div>
+    <div class="card"><div class="card-title">📋 提交记录</div><div id="hwList"></div></div>
+  </div>
+
+  <!-- REPERTOIRE -->
+  <div class="page" id="pg-rep">
+    <div class="card">
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:center">
+        <span>🎼 添加曲目</span>
+        <span style="font-size:11px;color:var(--gray-500);font-weight:400">支持拖拽文件到方框中上传</span>
+      </div>
+      <div class="form-inline">
+        <div class="form-group"><label>曲名 <span style="color:#c0392b">*</span></label><input type="text" id="rName" placeholder="如：茉莉花"></div>
+        <div class="form-group"><label>作曲</label><input type="text" id="rComp" placeholder="作者"></div>
+      </div>
+      <div class="form-inline">
+        <div class="form-group"><label>语言</label><input type="text" id="rLang" placeholder="中文/英文"></div>
+        <div class="form-group"><label>风格</label>
+          <select id="rStyle"><option>古典</option><option>民谣</option><option>流行</option><option>圣乐</option><option>现代</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label style="font-size:11px;color:var(--gray-500);margin:8px 0 4px">🎵 拖拽或点击上传音频文件（MP3/WAV/M4A）</label></div>
+      <div class="drop-grid">
+        <div class="drop-zone" id="dzS" data-target="rAudS" onclick="filePick(this)">
+          <span class="dz-icon">🎤</span>
+          <span class="dz-label">女高音 S</span>
+          <span class="dz-hint">拖拽或点击上传</span>
+          <button class="dz-remove" onclick="clearFileDZ('dzS',event)">✕</button>
+          <input type="file" accept="audio/*" hidden onchange="handleFilePick(this,'rAudS','dzS')">
+          <input type="text" class="dz-fallback" id="rAudS" placeholder="或粘贴链接" onclick="event.stopPropagation()">
+        </div>
+        <div class="drop-zone" id="dzA" data-target="rAudA" onclick="filePick(this)">
+          <span class="dz-icon">🎤</span>
+          <span class="dz-label">女低音 A</span>
+          <span class="dz-hint">拖拽或点击上传</span>
+          <button class="dz-remove" onclick="clearFileDZ('dzA',event)">✕</button>
+          <input type="file" accept="audio/*" hidden onchange="handleFilePick(this,'rAudA','dzA')">
+          <input type="text" class="dz-fallback" id="rAudA" placeholder="或粘贴链接" onclick="event.stopPropagation()">
+        </div>
+        <div class="drop-zone" id="dzT" data-target="rAudT" onclick="filePick(this)">
+          <span class="dz-icon">🎤</span>
+          <span class="dz-label">男高音 T</span>
+          <span class="dz-hint">拖拽或点击上传</span>
+          <button class="dz-remove" onclick="clearFileDZ('dzT',event)">✕</button>
+          <input type="file" accept="audio/*" hidden onchange="handleFilePick(this,'rAudT','dzT')">
+          <input type="text" class="dz-fallback" id="rAudT" placeholder="或粘贴链接" onclick="event.stopPropagation()">
+        </div>
+        <div class="drop-zone" id="dzB" data-target="rAudB" onclick="filePick(this)">
+          <span class="dz-icon">🎤</span>
+          <span class="dz-label">男低音 B</span>
+          <span class="dz-hint">拖拽或点击上传</span>
+          <button class="dz-remove" onclick="clearFileDZ('dzB',event)">✕</button>
+          <input type="file" accept="audio/*" hidden onchange="handleFilePick(this,'rAudB','dzB')">
+          <input type="text" class="dz-fallback" id="rAudB" placeholder="或粘贴链接" onclick="event.stopPropagation()">
+        </div>
+      </div>
+      <div class="form-group" style="margin-top:8px"><label style="font-size:11px;color:var(--gray-500)">🎥 视频 / 📄 简谱</label></div>
+      <div class="drop-grid-2">
+        <div class="drop-zone" id="dzV" data-target="rVid" onclick="filePick(this)">
+          <span class="dz-icon">🎬</span>
+          <span class="dz-label">参考视频</span>
+          <span class="dz-hint">MP4/MOV 或 YouTube 链接</span>
+          <button class="dz-remove" onclick="clearFileDZ('dzV',event)">✕</button>
+          <input type="file" accept="video/*,image/*" hidden onchange="handleFilePick(this,'rVid','dzV')">
+          <input type="text" class="dz-fallback" id="rVid" placeholder="或粘贴 YouTube/B站链接" onclick="event.stopPropagation()">
+        </div>
+        <div class="drop-zone" id="dzSh" data-target="rSheet" onclick="filePick(this)">
+          <span class="dz-icon">📄</span>
+          <span class="dz-label">简谱</span>
+          <span class="dz-hint">图片或 PDF</span>
+          <button class="dz-remove" onclick="clearFileDZ('dzSh',event)">✕</button>
+          <input type="file" accept="image/*,.pdf" hidden onchange="handleFilePick(this,'rSheet','dzSh')">
+          <input type="text" class="dz-fallback" id="rSheet" placeholder="或粘贴图片链接" onclick="event.stopPropagation()">
+        </div>
+      </div>
+      <button class="btn btn-gold btn-w" onclick="addRep()" style="margin-top:4px">➕ 添加曲目</button>
+    </div>
+    <div class="card"><div class="card-title">📖 曲目列表</div><div id="repList"></div></div>
+  </div>
+
+  <!-- REPERTOIRE DETAIL (modal) -->
+  <div class="modal-overlay" id="repModal" onclick="if(event.target===this)closeRepModal()">
+    <div class="modal" id="repDetail"></div>
+  </div>
+
+  <!-- Image fullscreen viewer -->
+  <div class="img-viewer" id="imgViewer">
+    <button class="close-btn" onclick="closeImgViewer()">✕</button>
+    <img id="imgViewerSrc" src="" alt="简谱大图" onclick="closeImgViewer()">
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="page" id="pg-cal">
+    <div class="card">
+      <div class="cal-nav">
+        <button onclick="cm(-1)">‹</button>
+        <span id="calT">2026年5月</span>
+        <button onclick="cm(1)">›</button>
+      </div>
+      <div class="cal-g" id="calG"></div>
+      <div id="calE"></div>
+    </div>
+    <div class="card">
+      <div class="card-title">➕ 添加活动</div>
+      <div class="form-inline">
+        <div class="form-group"><label>标题</label><input type="text" id="evT"></div>
+        <div class="form-group"><label>日期</label><input type="date" id="evD"></div>
+      </div>
+      <div class="form-inline">
+        <div class="form-group"><label>时间</label><input type="time" id="evTm" value="19:00"></div>
+        <div class="form-group"><label>类型</label>
+          <select id="evTy"><option value="排练">🎵 排练</option><option value="演出">🎭 演出</option><option value="会议">📋 会议</option><option value="团建">🎉 团建</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label>地点</label><input type="text" id="evL"></div>
+      <button class="btn btn-gold btn-w" onclick="addEv()">➕ 添加</button>
+    </div>
+  </div>
+
+  <!-- ANNOUNCEMENTS -->
+  <div class="page" id="pg-ann">
+    <div class="card">
+      <div class="card-title">📢 发布公告</div>
+      <div class="form-group"><label>标题</label><input type="text" id="aT"></div>
+      <div class="form-group"><label>内容</label><textarea id="aB"></textarea></div>
+      <div class="form-group"><label>优先级</label>
+        <select id="aP"><option value="普通">普通</option><option value="重要">⭐ 重要</option><option value="紧急">🔥 紧急</option></select>
+      </div>
+      <button class="btn btn-gold btn-w" onclick="addAnn()">📢 发布</button>
+    </div>
+    <div class="card"><div class="card-title">📋 公告列表</div><div id="annList"></div></div>
+  </div>
+
+  <!-- DISCUSSION -->
+  <div class="page" id="pg-disc">
+    <div class="card">
+      <div class="card-title">💬 讨论区</div>
+      <div class="form-group"><textarea id="dMsg" placeholder="说点什么…" style="min-height:45px"></textarea></div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="dAuth" placeholder="你的名字" style="width:130px">
+        <button class="btn btn-gold" onclick="postMsg()">发送</button>
+      </div>
+    </div>
+    <div class="card"><div class="card-title">💬 聊天记录</div><div id="discList"></div></div>
+  </div>
+
+  <!-- MEDIA -->
+  <div class="page" id="pg-med">
+    <div class="card">
+      <div class="card-title">🎬 添加媒体</div>
+      <div class="form-inline">
+        <div class="form-group"><label>标题</label><input type="text" id="mT"></div>
+        <div class="form-group"><label>类型</label>
+          <select id="mTy"><option value="video">🎥 视频</option><option value="audio">🎵 音频</option><option value="photo">📸 照片</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label>链接/备注</label><input type="text" id="mL"></div>
+      <button class="btn btn-gold btn-w" onclick="addMed()">➕ 添加</button>
+    </div>
+    <div class="card"><div class="card-title">🎬 媒体库</div><div class="mg" id="medG"></div></div>
+  </div>
+
+  <!-- ATTENDANCE -->
+  <div class="page" id="pg-att">
+    <div class="card">
+      <div class="card-title">✅ 考勤签到</div>
+      <div class="form-inline">
+        <div class="form-group"><label>日期</label><input type="date" id="atD"></div>
+        <div class="form-group"><label>活动</label><input type="text" id="atN" value="排练"></div>
+      </div>
+      <button class="btn btn-gold btn-w" onclick="startAtt()">📋 开始签到</button>
+    </div>
+    <div id="attArea"></div>
+    <div class="card"><div class="card-title">📊 统计</div><div id="attStats"></div></div>
+  </div>
+</div>
+
+<!-- Bottom nav -->
+<nav class="bottom-nav">
+  <button class="nav-item active" data-page="home" onclick="nav('home')"><span class="ni">🏠</span>首页</button>
+  <button class="nav-item" data-page="members" onclick="nav('members')"><span class="ni">👥</span>成员</button>
+  <button class="nav-item" data-page="hw" onclick="nav('hw')"><span class="ni">📋</span>作业</button>
+  <button class="nav-item" data-page="rep" onclick="nav('rep')"><span class="ni">🎼</span>曲目</button>
+  <button class="nav-item" data-page="cal" onclick="nav('cal')"><span class="ni">📅</span>日程</button>
+  <button class="nav-item" data-page="ann" onclick="nav('ann')"><span class="ni">📢</span>公告</button>
+  <button class="nav-item" data-page="disc" onclick="nav('disc')"><span class="ni">💬</span>讨论</button>
+  <button class="nav-item" data-page="med" onclick="nav('med')"><span class="ni">🎬</span>媒体</button>
+  <button class="nav-item" data-page="att" onclick="nav('att')"><span class="ni">✅</span>签到</button>
+</nav>
+
+<script>
+// ===== MEMBERS DATA =====
+const MEMBERS = {
+  soprano: ['叶晓君','李洪玲','范亚俊','王丽君','苏敏娜','邹纪平','孙爱丽','尉立萍','罗佑妮','苏青英','宋丽萍','连品兰','王皎地','陈宗敏','蔡玉璋','岳新民','吕红娜','宗慧敏','周青','俞瑾'],
+  alto: [],
+  tenor: ['刘义鑫','张来专','区炜丰','梁吉','李松','谢胜荣'],
+  bass: ['容子燊','华家祥','漆智铭','李阳寿','李松','朱光荣','张百鑫'],
+};
+const VL = {soprano:{l:'女高音',e:'Soprano'},alto:{l:'女低音',e:'Alto'},tenor:{l:'男高音',e:'Tenor'},bass:{l:'男低音',e:'Bass'}};
+
+
+// ===== Firebase =====
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyCUAA7pnrkoAcJzI_uACCoTNyp48uRsS-c",
+  authDomain: "golden-voice-80280.firebaseapp.com",
+  projectId: "golden-voice-80280",
+  storageBucket: "golden-voice-80280.firebasestorage.app",
+  messagingSenderId: "316872480652",
+  appId: "1:316872480652:web:9d33319c218ea87ffee8a9",
+  measurementId: "G-DCNHYR791T"
+};
+firebase.initializeApp(FIREBASE_CONFIG);
+const FIRESTORE = firebase.firestore();
+// Separate documents per data category to avoid 1MB single-doc limit
+function catDoc(cat){ return FIRESTORE.collection('gvc_data').doc(cat); }
+
+let _uploadingCount = 0;
+let data = null;
+let dataLoaded = false;
+let _gidCounter = Date.now();
+
+function gid(){return _gidCounter++}
+
+function getDefaultRepertoire(){
+  return [
+    {id:1,name:'茉莉花',composer:'江苏民歌',lang:'中文',style:'民谣',audS:'',audA:'',audT:'',audB:'',vid:'',sheet:''},
+    {id:2,name:'月亮代表我的心',composer:'翁清溪',lang:'中文',style:'流行',audS:'',audA:'',audT:'',audB:'',vid:'',sheet:''},
+    {id:3,name:'Hallelujah',composer:'Leonard Cohen',lang:'英文',style:'现代',audS:'',audA:'',audT:'',audB:'',vid:'',sheet:''},
+  ];
+}
+
+async function ld(){
+  const CATS = ['members','repertoire','events','announcements','discussion','media','attendance','homework'];
+  const merged = {};
+  try {
+    const snapshots = await Promise.all(CATS.map(c => catDoc(c).get()));
+    snapshots.forEach((doc, i) => {
+      if(doc.exists) merged[CATS[i]] = doc.data().items || [];
+    });
+  } catch(e){ console.warn('Firebase load error:', e); }
+  if(!merged.members) merged.members = JSON.parse(JSON.stringify(MEMBERS));
+  merged.nid = merged.members?._nid || Date.now();
+  if(!merged.repertoire || !merged.repertoire.length) merged.repertoire = getDefaultRepertoire();
+  if(!merged.events || !merged.events.length) merged.events = [{id:1,title:'排练',date:new Date().toISOString().slice(0,10),time:'19:00',type:'排练'}];
+  if(!merged.announcements || !merged.announcements.length) merged.announcements = [{id:1,title:'🎉 欢迎',body:'欢迎使用团员入口！',pri:'普通',time:Date.now(),author:'管理员'}];
+  if(!merged.discussion || !merged.discussion.length) merged.discussion = [{id:1,author:'管理员',text:'大家好！',time:Date.now()-3600000,color:'#72243E'}];
+  if(!merged.media || !merged.media.length) merged.media = [{id:1,title:'排练照片',type:'photo',link:'即将上传'}];
+  if(!merged.attendance) merged.attendance = [];
+  if(!merged.homework) merged.homework = [];
+  data = merged;
+  _gidCounter = data.nid || Date.now();
+  dataLoaded = true;
+}
+
+async function sv(){
+  if(!data) return;
+  data.nid = _gidCounter;
+  const CATS = ['members','repertoire','events','announcements','discussion','media','attendance','homework'];
+  try {
+    await Promise.all(CATS.map(c => catDoc(c).set({items: data[c] || []}, {merge: true})));
+  } catch(e){ console.warn('Firebase save error:', e); toast('⚠️ 保存失败：'+e.message); }
+}
+
+// Show loading overlay while data loads
+function showLoading(){document.getElementById('loadingOverlay').classList.add('show')}
+function hideLoading(){document.getElementById('loadingOverlay').classList.remove('show')}
+
+// ===== NAV =====
+function nav(pg){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('pg-'+pg).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.page===pg));
+  if(pg==='home')ov();else if(pg==='members')rm();else if(pg==='hw')rh();else if(pg==='rep')rr();
+  else if(pg==='cal')rc();else if(pg==='ann')ra();else if(pg==='disc')rd();else if(pg==='med')rmed();else if(pg==='att')ratt();
+}
+
+// ===== OVERVIEW =====
+function ov(){
+  const m=Object.values(data.members).reduce((a,b)=>a+b.length,0);
+  const r=data.repertoire.length;
+  const e=data.events.filter(ev=>new Date(ev.date)>=new Date()).length;
+  const h=data.homework.filter(h=>h.status==='pending').length;
+  document.getElementById('ovStats').innerHTML=[
+    ['👥 成员',m],['🎼 曲目',r],['📅 活动',e],['📋 待批',h]
+  ].map(([l,n])=>`<div class="stat-box"><div class="n">${n}</div><div class="l">${l}</div></div>`).join('');
+  document.getElementById('featGrid').innerHTML=[
+    ['👥','成员','名录管理','members'],['📋','作业','提交记录','hw'],
+    ['🎼','曲目','演唱曲目','rep'],['📅','日程','排练演出','cal'],
+    ['📢','公告','通知消息','ann'],['💬','讨论','交流','disc'],
+    ['🎬','媒体','音视频','med'],['✅','考勤','签到统计','att'],
+  ].map(([ic,fn,fd,pg])=>`<div class="feat-card" onclick="nav('${pg}')"><div class="fi">${ic}</div><div class="fn">${fn}</div><div class="fd">${fd}</div></div>`).join('');
+}
+
+// ===== MEMBERS =====
+function rm(){
+  const el=document.getElementById('memContainer');
+  el.innerHTML=Object.entries(data.members).filter(([,n])=>n.length).map(([p,names])=>{
+    const v=VL[p];const cls={soprano:'s',alto:'a',tenor:'t',bass:'b'};
+    return `<div class="vgroup">
+      <div class="vheader" onclick="this.classList.toggle('collapsed');const b=this.nextElementSibling;if(b)b.style.display=b.style.display==='none'?'block':'none'">
+        <h3>${v.l}</h3><span class="cnt">${names.length}人</span><span class="tog">▼</span>
+      </div>
+      <div class="vbody">${names.map(n=>`<span class="mtag ${cls[p]}">${n}</span>`).join('')}</div>
+    </div>`;
+  }).join('')||'<div class="empty">暂无团员</div>';
+}
+
+async function addMember(){
+  const n=document.getElementById('nmName').value.trim();
+  const p=document.getElementById('nmPart').value;
+  if(!n){toast('请输入姓名');return}
+  data.members[p].push(n);await sv();rm();
+  document.getElementById('nmName').value='';toast('✅ 已添加 '+n);
+}
+
+// ===== HOMEWORK =====
+function rh(){
+  const el=document.getElementById('hwList');
+  const items=[...data.homework].reverse();
+  if(!items.length){el.innerHTML='<div class="empty">暂无提交</div>';return}
+  el.innerHTML='<table class="tbl"><tr><th>姓名</th><th>声部</th><th>内容</th><th>状态</th></tr>'+
+    items.map(h=>`<tr><td>${h.name}</td><td><span class="badge badge-${h.part[0]}">${VL[h.part]?.l||h.part}</span></td><td>${h.note.slice(0,15)}</td><td><span class="tag tag-${h.status[0]}">${h.status==='pending'?'待批':'已批'}</span></td></tr>`).join('')+'</table>';
+}
+
+async function subHW(){
+  const n=document.getElementById('hwName').value.trim();
+  const p=document.getElementById('hwPart').value;
+  const note=document.getElementById('hwNote').value.trim();
+  if(!n||!note){toast('请填写姓名和内容');return}
+  data.homework.push({id:gid(),name:n,part:p,note,link:document.getElementById('hwLink').value.trim(),time:Date.now(),status:'pending'});
+  sv();rh();
+  document.getElementById('hwName').value='';document.getElementById('hwNote').value='';document.getElementById('hwLink').value='';
+  toast('✅ 已提交');
+}
+
+// ===== REPERTOIRE =====
+function rr(){
+  const el=document.getElementById('repList');
+  if(!data.repertoire.length){el.innerHTML='<div class="empty">暂无曲目</div>';return}
+  el.innerHTML=data.repertoire.map(r=>{
+    const hasMedia = r.audS||r.audA||r.audT||r.audB||r.vid||r.sheet;
+    return `<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--gray-200);cursor:pointer" onclick="showRepDetail(${r.id})">
+      <div>
+        <strong>${r.name}</strong>
+        <div style="font-size:11px;color:var(--gray-500)">${r.composer||'—'} · ${r.lang||'—'} · ${r.style||'—'}</div>
+        ${hasMedia?'<span style="font-size:10px;color:var(--gold)">🎵 有学习资料</span>':''}
+      </div>
+      <button class="btn btn-sm btn-out" onclick="event.stopPropagation();delRep(${r.id})" style="font-size:10px;padding:3px 8px">✕</button>
+    </div>`;
+  }).join('');
+}
+
+async function showRepDetail(id){
+  const r=data.repertoire.find(x=>x.id===id);if(!r)return;
+  // Resolve store: references to actual data URLs
+  async function resolveURL(u){
+    if(!u || !u.startsWith('store:')) return u;
+    try {
+      const fileId = u.slice(6);
+      const doc = await FIRESTORE.collection('gvc_store').doc(fileId).get();
+      if(doc.exists) return doc.data().data;
+      // Try chunked storage fallback
+      const manifest = await FIRESTORE.collection('gvc_files').doc(fileId).get();
+      if(!manifest.exists) return u;
+      const m = manifest.data();
+      const chunks = [];
+      for(let i = 0; i < m.chunks; i++){
+        const chunkDoc = await FIRESTORE.collection('gvc_chunks').doc(fileId + '_chunk_' + i).get();
+        if(chunkDoc.exists) chunks.push(chunkDoc.data().data);
+      }
+      return m.prefix + ',' + chunks.join('');
+    } catch(e) { return u; }
+  }
+  const [audS,audA,audT,audB,vid,sheet] = await Promise.all([
+    resolveURL(r.audS),resolveURL(r.audA),resolveURL(r.audT),resolveURL(r.audB),
+    resolveURL(r.vid),resolveURL(r.sheet)
+  ]);
+  const vi=!!vid,si=!!sheet;
+  const cols={soprano:'#72243E',alto:'#3C3489',tenor:'#0C447C',bass:'#27500A'};
+  function ac(p,l,u){
+    const h=!!u;
+    return '<div class="audio-card '+(h?'has-audio':'')+'" '+(h?'onclick="playAudio(this)"':'')+' style="'+(h?'border-top:3px solid '+(cols[p]||'#c9a84c'):'')+'"><div class="ac-text"><div class="ac-icon">'+(h?'\ud83c\udfb5':'\ud83d\udd07')+'</div><div class="ac-label">'+l+'</div><div class="ac-sub">'+(h?'\u70b9\u51fb\u64ad\u653e':'\u6682\u65e0\u97f3\u9891')+'</div></div><div class="ac-play">\u25b6</div><audio preload="none" src="'+(u||'')+'"></audio><div class="audio-seek" onclick="seekAudio(event,this)"><div class="audio-seek-fill"></div></div></div>';
+  }
+  const el=document.getElementById('repDetail');
+  el.innerHTML='<button class="close" onclick="closeRepModal()">\u2715</button><h3>'+r.name+'</h3><div class="sub">'+(r.composer||'\u2014')+' \u00b7 '+(r.lang||'\u2014')+' \u00b7 '+(r.style||'\u2014')+'</div><div class="section"><h4>\ud83c\udfb5 \u58f0\u90e8\u97f3\u9891</h4><div class="audio-grid">'+
+    ac('soprano','\u5973\u9ad8\u97f3 S',audS)+ac('alto','\u5973\u4f4e\u97f3 A',audA)+ac('tenor','\u7537\u9ad8\u97f3 T',audT)+ac('bass','\u7537\u4f4e\u97f3 B',audB)+
+  '</div></div>';
+  // Video
+  if(vid){
+    el.innerHTML+='<div class="section"><h4>\ud83c\udfa5 \u53c2\u8003\u89c6\u9891</h4>';
+    if(vi){
+      el.innerHTML+='<div class="video-card" onclick="this.innerHTML=\'<video controls autoplay style=\\"width:100%;height:100%;object-fit:contain;background:#000\\"><source src=\\"'+vid.replace(/\\/g,'\\\\')+'\\" type=\\"video/mp4\\"></video>\'"><div class="vc-play"><span>\u25b6</span></div></div>';
+    } else {
+      const ytm=vid.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([\w-]+)/);
+      const yt=ytm?ytm[1]:'';
+      if(yt){
+        el.innerHTML+='<div class="video-card" onclick="this.innerHTML=\'<iframe src=\\"https://www.youtube.com/embed/'+yt+'?autoplay=1\\" allow=\\"accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture\\" allowfullscreen style=\\"width:100%;height:100%;border:none\\"></iframe>\'"><div class="vc-play"><span>\u25b6</span></div><div class="vc-label">YouTube</div><img src="https://img.youtube.com/vi/'+yt+'/hqdefault.jpg" style="width:100%;height:100%;object-fit:cover" alt="\u89c6\u9891\u5c01\u9762" onerror="this.style.display=\'none\'"></div>';
+      } else {
+        el.innerHTML+='<div class="video-card" onclick="window.open(\''+vid.replace(/'/g,"\\'")+'\',\'_blank\')"><div class="vc-play"><span>\u25b6</span></div><div class="vc-label">\u70b9\u51fb\u64ad\u653e</div></div>';
+      }
+    }
+    el.innerHTML+='</div>';
+  }
+  // Sheet
+  if(sheet){
+    el.innerHTML+='<div class="section"><h4>\ud83d\udcc4 \u7b80\u8c31</h4><div id="sheet-area" class="sheet-card" style="cursor:pointer;padding:0"></div></div>';
+    // Use DOM to handle sheet display cleanly
+    setTimeout(function(){
+      const sa = document.getElementById('sheet-area');
+      if(!sa) return;
+      const s = sheet;
+      if(s){
+        const isPdf = s.includes('.pdf') || s.includes('firebasestorage') || s.includes('application');
+        const isImg = s.match(/\.(jpe?g|png|gif|webp)(\?.*)?$/i) || s.includes('drive.google.com') || s.includes('firebasestorage');
+        if(isPdf && !isImg){
+          sa.innerHTML='<div style="border:2px dashed var(--gold);padding:30px 20px;border-radius:var(--radius-sm);background:var(--gold-glow);text-align:center"><span style="font-size:32px;display:block;margin-bottom:8px">\ud83d\udcc4</span><strong>\u7b80\u8c31</strong><br><br><span style="font-size:14px;color:var(--gold);font-weight:500">\u70b9\u51fb\u4ee5\u65b0\u7a97\u53e3\u6253\u5f00 \u2192</span></div>';
+          sa.onclick=function(){window.open(s,'_blank')};
+        } else {
+          sa.innerHTML='<img src="'+s+'" alt="\u7b80\u8c31" style="width:100%;height:auto;display:block" onerror="this.outerHTML=\'<div class=\\\"sc-placeholder\\\"><span class=\\\"sc-icon\\\">\ud83d\udcc4</span>\u70b9\u51fb\u67e5\u770b</div>\'">';
+          sa.onclick=function(){openImgViewer(s)};
+        }
+      } else {
+        sa.innerHTML='<div class="sc-placeholder"><span class="sc-icon">\ud83d\udcc4</span>\u6682\u65e0\u7b80\u8c31</div>';
+      }
+    }, 50);
+  }
+  if(!(audS||audA||audT||audB||vid||sheet)){
+    el.innerHTML+='<p style="font-size:13px;color:var(--gray-500);text-align:center;padding:1rem">\u6682\u65e0\u5b66\u4e60\u8d44\u6599</p>';
+  }
+  document.getElementById('repModal').classList.add('show');
+}
+
+let currentAudio = null;
+function playAudio(el){
+  if(currentAudio&&currentAudio!==el){
+    const p=currentAudio.querySelector('audio');
+    if(p){p.pause();p.currentTime=0}
+    const pf=currentAudio.querySelector('.audio-seek-fill');
+    if(pf)pf.style.width='0%';
+    currentAudio.classList.remove('playing');
+  }
+  const a=el.querySelector('audio');
+  if(!a)return;
+  const fill=el.querySelector('.audio-seek-fill');
+  if(a.paused){
+    a.play();el.classList.add('playing');currentAudio=el;
+    a.ontimeupdate=()=>{if(fill&&a.duration)fill.style.width=(a.currentTime/a.duration*100)+'%'};
+    a.onended=()=>{el.classList.remove('playing');currentAudio=null;if(fill)fill.style.width='0%'};
+  }else{
+    a.pause();a.currentTime=0;el.classList.remove('playing');currentAudio=null;
+    if(fill)fill.style.width='0%';
+  }
+}
+
+function seekAudio(e,el){
+  e.stopPropagation();
+  const card=el.closest('.audio-card');
+  if(!card)return;
+  const a=card.querySelector('audio');
+  if(!a||!a.duration)return;
+  const rect=el.getBoundingClientRect();
+  const pct=(e.clientX-rect.left)/rect.width;
+  a.currentTime=pct*a.duration;
+  const fill=el.querySelector('.audio-seek-fill');
+  if(fill)fill.style.width=Math.min(100,Math.max(0,pct*100))+'%';
+}
+
+function openImg(url){
+  document.getElementById('imgViewerSrc').src=url;
+  document.getElementById('imgViewer').classList.add('show');
+}
+function closeImgViewer(){document.getElementById('imgViewer').classList.remove('show')}
+function closeRepModal(){document.getElementById('repModal').classList.remove('show')}
+
+// ===== File upload handling =====
+function getStoragePath(repId, field){
+  const now = Date.now();
+  return 'repertoire/' + repId + '/' + field + '_' + now;
+}
+
+function deleteFileFromStorage(url){ return Promise.resolve(); }
+
+function filePick(dz){
+  const inp = dz.querySelector('input[type=file]');
+  if(inp) inp.click();
+}
+
+// Drag & drop for all drop zones
+document.querySelectorAll('.drop-zone').forEach(dz => {
+  dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('dragover'); });
+  dz.addEventListener('dragleave', e => { dz.classList.remove('dragover'); });
+  dz.addEventListener('drop', e => {
+    e.preventDefault();
+    dz.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if(file) readFileToDZ(file, dz);
+  });
+});
+
+function handleFilePick(input, targetId, dzId){
+  if(input.files && input.files[0]){
+    readFileToDZ(input.files[0], document.getElementById(dzId));
+  }
+  input.value = '';
+}
+
+async function readFileToDZ(file, dz){
+  if(!dz) return;
+  if(file.size > 200*1024*1024){
+    toast('⚠️ 文件过大（>200MB），请使用外部链接');
+    const fb = dz.querySelector('.dz-fallback');
+    if(fb){ fb.style.display='block'; fb.focus(); }
+    return;
+  }
+  const maxDirect = 700*1024; // 700KB - ~1MB base64 data URL fits in Firestore doc
+  if(file.size <= maxDirect){
+    // Store directly in gvc_store
+    toast('↑ 正在上传...');
+    try {
+      const dataUrl = await readAsDataURL(file);
+      const fileId = 'f_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+      await FIRESTORE.collection('gvc_store').doc(fileId).set({data: dataUrl, name: file.name, size: file.size});
+      dz.dataset.fileUrl = 'store:' + fileId;
+      dz.dataset.fileName = file.name;
+      dz.dataset.fileSize = file.size;
+      setDZUploaded(dz, file);
+      toast('✅ 已上传：'+file.name);
+    } catch(err) {
+      toast('⚠️ 上传失败：' + err.message);
+    }
+  } else {
+    // Split into chunks for large files
+    toast('↑↑ 正在上传大文件('+(file.size/1024/1024).toFixed(1)+'MB)...');
+    try {
+      const dataUrl = await readAsDataURL(file);
+      const comma = dataUrl.indexOf(',');
+      const prefix = dataUrl.slice(0, comma);
+      const b64 = dataUrl.slice(comma + 1);
+      const fileId = 'f_' + Date.now() + '_' + Math.random().toString(36).slice(2,8);
+      const chunkSize = 500*1024; // 500KB per chunk
+      const chunks = Math.ceil(b64.length / chunkSize);
+      await FIRESTORE.collection('gvc_files').doc(fileId).set({prefix, chunks, name: file.name, size: file.size});
+      for(let i = 0; i < chunks; i++){
+        await FIRESTORE.collection('gvc_chunks').doc(fileId + '_chunk_' + i).set({data: b64.slice(i * chunkSize, (i+1) * chunkSize)});
+      }
+      dz.dataset.fileUrl = 'store:' + fileId;
+      dz.dataset.fileName = file.name;
+      dz.dataset.fileSize = file.size;
+      setDZUploaded(dz, file);
+      toast('✅ 已上传：'+file.name);
+    } catch(err) {
+      toast('⚠️ 上传失败：'+err.message+'，请改用外部链接');
+      const fb = dz.querySelector('.dz-fallback');
+      if(fb){ fb.style.display='block'; fb.focus(); }
+    }
+  }
+}
+
+function readAsDataURL(file){
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => resolve(e.target.result);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+function setDZUploaded(dz, file){
+  dz.classList.add('has-file');
+  const hint = dz.querySelector('.dz-hint');
+  let nameEl = dz.querySelector('.dz-name');
+  if(!nameEl){ nameEl = document.createElement('span'); nameEl.className = 'dz-name'; dz.appendChild(nameEl); }
+  nameEl.textContent = file.name + ' ✅';
+  if(hint) hint.textContent = (file.size/1024/1024).toFixed(1)+'MB';
+}
+
+function clearFileDZ(dzId, e){
+  if(e) e.stopPropagation();
+  const dz = document.getElementById(dzId); if(!dz) return;
+  dz.dataset.fileUrl=''; dz.dataset.fileName=''; dz.dataset.fileSize='';
+  dz.classList.remove('has-file');
+  const ne = dz.querySelector('.dz-name'); if(ne) ne.remove();
+  const hi = dz.querySelector('.dz-hint'); if(hi) hi.textContent = '拖拽或点击上传';
+  const fb = dz.querySelector('.dz-fallback'); if(fb) { fb.value = ''; fb.style.display='none'; }
+}
+
+function getDZ(id){return document.getElementById('dz'+id)}
+function getDZData(dz){return dz ? dz.dataset.fileUrl || '' : ''}
+
+async function addRep(){
+  const n=document.getElementById('rName').value.trim();
+  if(!n){toast('请输入曲名');return}
+  try {
+    data.repertoire.push({id:gid(),name:n,
+      composer:document.getElementById('rComp').value.trim(),
+      lang:document.getElementById('rLang').value.trim(),
+      style:document.getElementById('rStyle').value,
+      audS: (getDZ('S')?.dataset?.fileUrl) || document.getElementById('rAudS')?.value?.trim() || '',
+      audA: (getDZ('A')?.dataset?.fileUrl) || document.getElementById('rAudA')?.value?.trim() || '',
+      audT: (getDZ('T')?.dataset?.fileUrl) || document.getElementById('rAudT')?.value?.trim() || '',
+      audB: (getDZ('B')?.dataset?.fileUrl) || document.getElementById('rAudB')?.value?.trim() || '',
+      vid: (document.getElementById('dzV')?.dataset?.fileUrl) || document.getElementById('rVid')?.value?.trim() || '',
+      sheet: (document.getElementById('dzSh')?.dataset?.fileUrl) || document.getElementById('rSheet')?.value?.trim() || '',
+    });
+    await sv(); rr();
+    // Reset all fields
+    ['rName','rComp','rLang','rAudS','rAudA','rAudT','rAudB','rVid','rSheet'].forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});
+    ['dzS','dzA','dzT','dzB','dzV','dzSh'].forEach(dzId=>clearFileDZ(dzId));
+    toast('✅ 已添加');
+  } catch(e) {
+    alert('添加失败: ' + e.message + '\n' + e.stack);
+  }
+}
+
+async function delRep(id){
+  data.repertoire = data.repertoire.filter(x => x.id !== id);
+  await sv(); rr();
+}
+
+// ===== CALENDAR =====
+let cy=new Date().getFullYear(),cmn=new Date().getMonth();
+function rc(){
+  const g=document.getElementById('calG');
+  document.getElementById('calT').textContent=cy+'年'+(cmn+1)+'月';
+  const n=new Date(),td=n.getFullYear()+'-'+String(n.getMonth()+1).padStart(2,'0')+'-'+String(n.getDate()).padStart(2,'0');
+  const dim=new Date(cy,cmn+1,0).getDate(),fd=new Date(cy,cmn,1).getDay();
+  let h='日一二三四五六'.split('').map(d=>`<div class="cal-h">${d}</div>`).join('');
+  for(let i=fd-1;i>=0;i--)h+=`<div class="cal-d other"></div>`;
+  for(let d=1;d<=dim;d++){
+    const ds=cy+'-'+String(cmn+1).padStart(2,'0')+'-'+String(d).padStart(2,'0');
+    const he=data.events.filter(e=>e.date===ds).length>0;
+    h+=`<div class="cal-d ${ds===td?'today':''} ${he?'he':''}">${d}</div>`;
+  }
+  g.innerHTML=h;
+  const me=data.events.filter(e=>{const p=e.date.split('-');return parseInt(p[0])===cy&&parseInt(p[1])===cmn+1}).sort((a,b)=>a.date.localeCompare(b.date));
+  const el=document.getElementById('calE');
+  if(!me.length){el.innerHTML='<div class="empty">本月无活动</div>';return}
+  el.innerHTML='<div style="font-size:12px;font-weight:600;margin:6px 0">本月活动</div>'+
+    me.map(e=>`<div class="erow"><span>${tyI(e.type)} ${e.title} <span style="color:var(--gray-500);font-size:11px">${e.date.slice(5)}</span></span><button class="del" onclick="delEv(${e.id})">✕</button></div>`).join('');
+}
+function tyI(t){const m={排练:'🎵',演出:'🎭',会议:'📋',团建:'🎉'};return m[t]||'📌'}
+function cm(d){cmn+=d;if(cmn>11){cmn=0;cy++}if(cmn<0){cmn=11;cy--}rc()}
+async function addEv(){
+  const t=document.getElementById('evT').value.trim(),d=document.getElementById('evD').value;
+  if(!t||!d){toast('请填写标题和日期');return}
+  data.events.push({id:gid(),title:t,date:d,time:document.getElementById('evTm').value,type:document.getElementById('evTy').value,loc:document.getElementById('evL').value.trim()});
+  sv();rc();document.getElementById('evT').value='';document.getElementById('evL').value='';toast('✅ 已添加');
+}
+async function delEv(id){data.events=data.events.filter(e=>e.id!==id);await sv();rc()}
+
+// ===== ANNOUNCEMENTS =====
+function ra(){
+  const el=document.getElementById('annList');
+  if(!data.announcements.length){el.innerHTML='<div class="empty">暂无公告</div>';return}
+  const pm={普通:'tag-p',重要:'tag-p',紧急:'tag-l'},pi={普通:'',重要:'⭐ ',紧急:'🔥 '};
+  el.innerHTML=[...data.announcements].reverse().map(a=>`<div style="padding:10px 0;border-bottom:1px solid var(--gray-200)">
+    <div style="font-weight:600;font-size:13px">${pi[a.pri]||''}${a.title}</div>
+    <div style="font-size:12px;margin:4px 0">${a.body}</div>
+    <div style="font-size:10px;color:var(--gray-500)">${a.author||''} · ${new Date(a.time).toLocaleDateString('zh-CN')}</div>
+  </div>`).join('');
+}
+async function addAnn(){
+  const t=document.getElementById('aT').value.trim(),b=document.getElementById('aB').value.trim();
+  if(!t||!b){toast('请填写标题和内容');return}
+  data.announcements.push({id:gid(),title:t,body:b,pri:document.getElementById('aP').value,time:Date.now(),author:'管理员'});
+  sv();ra();document.getElementById('aT').value='';document.getElementById('aB').value='';toast('✅ 已发布');
+}
+
+// ===== DISCUSSION =====
+function rd(){
+  const el=document.getElementById('discList');
+  if(!data.discussion.length){el.innerHTML='<div class="empty">暂无消息</div>';return}
+  const col=['#72243E','#0C447C','#27500A','#3C3489'];
+  el.innerHTML=[...data.discussion].reverse().map(m=>{
+    const c=m.color||col[Math.floor(Math.random()*col.length)];
+    return `<div class="msg"><div class="msg-h"><div class="msg-av" style="background:${c}">${m.author.charAt(0)}</div><span class="msg-n">${m.author}</span><span class="msg-t">${new Date(m.time).toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'})}</span></div><div class="msg-b">${m.text}</div></div>`;
+  }).join('');
+}
+function postMsg(){
+  const t=document.getElementById('dMsg').value.trim();
+  const a=document.getElementById('dAuth').value.trim()||'匿名';
+  if(!t){toast('请输入消息');return}
+  const col=['#72243E','#0C447C','#27500A','#3C3489','#8b3a2a'];
+  data.discussion.push({id:gid(),author:a,text:t,time:Date.now(),color:col[data.discussion.length%col.length]});
+  sv();rd();document.getElementById('dMsg').value='';toast('💬 已发送');
+}
+
+// ===== MEDIA =====
+function rmed(){
+  const el=document.getElementById('medG');
+  if(!data.media.length){el.innerHTML='<div class="empty" style="grid-column:1/-1">暂无媒体</div>';return}
+  const icons={video:'🎥',audio:'🎵',photo:'📸'};
+  const cols={video:'linear-gradient(135deg,#1a237e,#283593)',audio:'linear-gradient(135deg,#1b5e20,#2e7d32)',photo:'linear-gradient(135deg,#e65100,#ef6c00)'};
+  el.innerHTML=[...data.media].reverse().map(m=>`<div class="mi"><div class="thumb" style="background:${cols[m.type]||cols.video}">${icons[m.type]||'🎬'}</div><div class="info"><strong>${m.title}</strong><small>${m.link||''}</small><div style="margin-top:2px"><button class="btn btn-sm btn-out" onclick="delMed(${m.id})">✕</button></div></div></div>`).join('');
+}
+function addMed(){
+  const t=document.getElementById('mT').value.trim();
+  if(!t){toast('请输入标题');return}
+  data.media.push({id:gid(),title:t,type:document.getElementById('mTy').value,link:document.getElementById('mL').value.trim()});
+  sv();rmed();document.getElementById('mT').value='';document.getElementById('mL').value='';toast('✅ 已添加');
+}
+async function delMed(id){data.media=data.media.filter(m=>m.id!==id);await sv();rmed()}
+
+// ===== ATTENDANCE =====
+function ratt(){
+  document.getElementById('atD').value=new Date().toISOString().slice(0,10);
+  document.getElementById('attArea').innerHTML='';rattStats();
+}
+async function startAtt(){
+  const d=document.getElementById('atD').value;
+  const evt=document.getElementById('atN').value.trim()||'排练';
+  if(!d){toast('请选择日期');return}
+  let s=data.attendance.find(a=>a.date===d&&a.event===evt);
+  if(!s){
+    s={id:gid(),date:d,event:evt,records:[]};
+    Object.entries(data.members).forEach(([part,names])=>{names.forEach(n=>{s.records.push({name:n,part,status:'absent'})})});
+    data.attendance.push(s);await sv();
+  }
+  const bc={soprano:'badge-s',alto:'badge-a',tenor:'badge-t',bass:'badge-b'};
+  document.getElementById('attArea').innerHTML=`<div class="card">
+    <div style="font-size:13px;font-weight:600;margin-bottom:6px">✅ ${d} ${evt}</div>
+    <div style="max-height:300px;overflow-y:auto">${s.records.map(r=>`<div style="display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--gray-200);font-size:12px"><span style="min-width:44px">${r.name}</span><span class="badge ${bc[r.part]||''}">${VL[r.part]?.l?.[0]||''}</span><select style="margin-left:auto;padding:2px 6px;border:1px solid var(--gray-200);border-radius:4px;font-size:11px" onchange="updAtt(${s.id},'${r.name}','${r.part}',this.value)"><option value="present" ${r.status==='present'?'selected':''}>✅到</option><option value="late" ${r.status==='late'?'selected':''}>⏰迟到</option><option value="absent" ${r.status==='absent'?'selected':''}>❌缺</option><option value="excused" ${r.status==='excused'?'selected':''}>📝请假</option></select></div>`).join('')}</div>
+    <div style="margin-top:6px;display:flex;gap:6px"><button class="btn btn-sm btn-gold" onclick="mkAll(${s.id},'present')">✅全到</button><button class="btn btn-sm btn-out" onclick="mkAll(${s.id},'absent')">❌全缺</button></div>
+  </div>`;rattStats();
+}
+async function updAtt(sid,name,part,status){
+  const s=data.attendance.find(a=>a.id===sid);if(!s)return;
+  const r=s.records.find(rec=>rec.name===name&&rec.part===part);if(r)r.status=status;await sv();rattStats();
+}
+async function mkAll(sid,status){const s=data.attendance.find(a=>a.id===sid);if(!s)return;s.records.forEach(r=>r.status=status);await sv();startAtt();toast(status==='present'?'✅ 全部签到':'❌ 全部缺席')}
+function rattStats(){
+  const el=document.getElementById('attStats');
+  if(!data.attendance.length){el.innerHTML='<div class="empty">暂无记录</div>';return}
+  const t=data.attendance.reduce((s,a)=>s+a.records.length,0);
+  const p=data.attendance.reduce((s,a)=>s+a.records.filter(r=>r.status==='present').length,0);
+  const l=data.attendance.reduce((s,a)=>s+a.records.filter(r=>r.status==='late').length,0);
+  const ab=data.attendance.reduce((s,a)=>s+a.records.filter(r=>r.status==='absent').length,0);
+  el.innerHTML=`<div class="stats">${[['签到',data.attendance.length],['已到',p],['迟到',l],['缺席',ab]].map(([lbl,n])=>`<div class="stat-box"><div class="n">${n}</div><div class="l">${lbl}</div></div>`).join('')}</div><div style="font-size:11px;color:var(--gray-500)">出勤率: ${t?Math.round((p+l)/t*100):0}%</div>`;
+}
+
+// ===== TOAST =====
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.style.display='block';
+  setTimeout(()=>el.style.display='none',2200);
+}
+
+// ===== INIT =====
+(async function(){
+  showLoading();
+  await ld();
+  hideLoading();
+  ov();
+  // Also restore the file drop zones after data load
+})();
+</script>
+</body>
+</html>
