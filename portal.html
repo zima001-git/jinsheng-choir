@@ -763,9 +763,6 @@ async function showRepDetail(id){
       el.innerHTML+='<div class="video-card" onclick="this.innerHTML=\'<video controls autoplay style=\"width:100%;height:100%;object-fit:contain;background:#000\"><source src=\"'+vid.replace(/\\/g,'\\\\')+'\"></video>\'"><div class="vc-play"><span>\u25b6</span></div></div>';
     } else {
       el.innerHTML+='<div class="video-card" onclick="window.open(\''+vid.replace(/'/g,"\\'")+'\',\'_blank\')"><div class="vc-play"><span>\u25b6</span></div><div class="vc-label">\u70b9\u51fb\u64ad\u653e</div></div>';
-    }else {
-        el.innerHTML+='<div class="video-card" onclick="window.open(\''+vid.replace(/'/g,"\\'")+'\',\'_blank\')"><div class="vc-play"><span>\u25b6</span></div><div class="vc-label">\u70b9\u51fb\u64ad\u653e</div></div>';
-      }
     }
     el.innerHTML+='</div>';
   }
