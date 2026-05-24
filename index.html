@@ -1073,8 +1073,15 @@ document.querySelectorAll('.nav a').forEach(a => {
     // Don't close nav when clicking the parent of a dropdown (mobile toggle)
     const wrap = a.closest('.nav-item-wrap');
     if (wrap && window.innerWidth <= 768) {
-      e.preventDefault();
-      wrap.classList.toggle('open');
+      // Only toggle the dropdown when clicking the parent toggle link, not dropdown items
+      if (!a.closest('.nav-dropdown')) {
+        e.preventDefault();
+        wrap.classList.toggle('open');
+        return;
+      }
+      // Dropdown items: navigate and close menu
+      document.getElementById('mainNav').classList.remove('open');
+      document.getElementById('hamburger').classList.remove('active');
       return;
     }
     document.getElementById('mainNav').classList.remove('open');
